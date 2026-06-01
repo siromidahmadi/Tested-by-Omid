@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omid Ahmadi — QA Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400&family=Vazirmatn:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #000000;
+  --crimson: #8B0000;
+  --crimson-dark: #4A0000;
+  --gold: #C9A961;
+  --gold-light: #D4B87A;
+  --cream: #F5F1E8;
+  --cream-dim: rgba(245,241,232,0.65);
+  --cream-faint: rgba(245,241,232,0.35);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+  line-height: 1.6;
+}
+
+/* ─── CURSOR ─── */
+#cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, opacity 0.3s;
+  left: -100px; top: -100px;
+}
+#cursor.hover {
+  width: 24px; height: 24px;
+  background: transparent;
+  border: 1px solid var(--gold);
+}
+
+/* ─── NAVBAR ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.75rem 3rem;
+  transition: background 0.5s, backdrop-filter 0.5s, padding 0.4s;
+}
+nav.scrolled {
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 1.25rem 3rem;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--cream);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+.nav-logo img {
+  display: block;
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.7);
+  text-shadow: 0 0 12px rgba(0,0,0,0.8);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.lang-btn {
+  background: none; border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: none;
+  padding: 0;
+  transition: color 0.25s;
+}
+.lang-btn.active  { color: var(--gold); }
+.lang-btn.inactive{ color: rgba(245,241,232,0.28); }
+.lang-sep { color: var(--gold); opacity: 0.35; font-size: 0.6rem; }
+
+/* ═══════════════════════════════
+   HERO — sticky cinematic scroll
+   The hero is 500vh tall. The
+   sticky container pins at the top
+   for the entire scroll distance.
+   Photo lives ONLY inside here.
+══════════════════════════════════ */
+.hero {
+  position: relative;
+  height: 500vh;
+}
+
+.hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Radial vignette */
+.hero-sticky::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.88) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Film grain */
+.grain {
+  position: absolute; inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* ── PHOTO LAYER (hero only) ── */
+.hero-bg {
+  position: absolute; inset: 0;
+  z-index: 1;
+}
+
+/* Dark cinematic background */
+.vid-placeholder {
+  width: 100%; height: 100%;
+  background: radial-gradient(ellipse at 50% 60%, #1a0000 0%, #0d0000 40%, #000 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* The photo — fades out as user scrolls through hero */
+.photo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  transition: opacity 0.1s linear;
+  /* JS controls opacity via .fading-out class + inline style */
+}
+
+.profile-photo {
+  width: min(290px, 52vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+  object-fit: cover;
+  object-position: 80% 10%;
+  border: 0.5px solid rgba(201,169,97,0.28);
+  box-shadow:
+    0 0 70px rgba(139,0,0,0.28),
+    0 0 42px rgba(201,169,97,0.14);
+  filter: saturate(1.05) contrast(1.05);
+  animation: float-bag 5s ease-in-out infinite alternate;
+}
+
+@keyframes float-bag {
+  from { transform: translateY(-10px) rotate(-0.8deg); }
+  to   { transform: translateY(8px)  rotate(0.8deg); }
+}
+
+.crimson-haze {
+  position: absolute;
+  top: 0; left: 50%;
+  width: 500px; height: 500px;
+  transform: translate(-50%, -30%);
+  background: radial-gradient(circle, rgba(139,0,0,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-location {
+  position: absolute;
+  bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(201,169,97,0.85);
+  text-shadow:
+    0 0 14px rgba(0,0,0,0.85),
+    0 0 30px rgba(201,169,97,0.18);
+  white-space: nowrap;
+  z-index: 4;
+}
+
+/* Particles */
+.particles-layer {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.p-dot {
+  position: absolute;
+  border-radius: 50%;
+  animation: rise linear infinite;
+  opacity: 0;
+}
+@keyframes rise {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  15%  { opacity: 0.7; }
+  85%  { opacity: 0.2; }
+  100% { transform: translateY(-140px) translateX(var(--dx)); opacity: 0; }
+}
+
+/* Gallery frame corners */
+.gallery-frame {
+  position: absolute;
+  inset: 2.5rem;
+  z-index: 4;
+  pointer-events: none;
+}
+.crn {
+  position: absolute;
+  width: 30px; height: 30px;
+  border-color: rgba(201,169,97,0.35);
+  border-style: solid;
+}
+.crn-tl { top:0; left:0;  border-width: 1px 0 0 1px; }
+.crn-tr { top:0; right:0; border-width: 1px 1px 0 0; }
+.crn-bl { bottom:0; left:0;  border-width: 0 0 1px 1px; }
+.crn-br { bottom:0; right:0; border-width: 0 1px 1px 0; }
+
+/* ─── HERO OVERLAYS ─── */
+.overlay {
+  position: absolute;
+  z-index: 5;
+  text-align: center;
+  width: 100%;
+  padding: 0 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1),
+              transform 0.9s cubic-bezier(0.4,0,0.2,1);
+}
+.overlay.hidden-above {
+  opacity: 0;
+  transform: translateY(-57%);
+  pointer-events: none;
+}
+.overlay.hidden-below {
+  opacity: 0;
+  transform: translateY(-43%);
+  pointer-events: none;
+}
+.overlay.visible {
+  opacity: 1;
+  transform: translateY(-50%);
+  pointer-events: auto;
+}
+
+/* ov0 has the photo; push text to bottom-third so photo and text don't fight */
+#ov0 {
+  top: auto;
+  bottom: 10%;
+  transform: none;
+}
+#ov0.hidden-above {
+  opacity: 0;
+  transform: translateY(-14px);
+}
+#ov0.hidden-below {
+  opacity: 0;
+  transform: translateY(14px);
+}
+#ov0.visible {
+  transform: none;
+}
+
+.ov-eyebrow {
+  font-size: 0.62rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+}
+.ov-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream);
+  line-height: 0.95;
+  margin-bottom: 1.2rem;
+}
+.ov-title .g { color: var(--gold); }
+.ov-sub {
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+}
+.ov-cta {
+  display: inline-block;
+  margin-top: 1.6rem;
+  padding: 0.9rem 2.8rem;
+  border: 0.5px solid var(--gold);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  transition: background 0.35s, color 0.35s;
+}
+.ov-cta:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* Scroll cue */
+.scroll-cue {
+  position: absolute;
+  bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  animation: cuefade 1s ease 3.5s forwards;
+}
+@keyframes cuefade { to { opacity: 0; pointer-events: none; } }
+.cue-text {
+  font-size: 0.58rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.28);
+}
+.cue-line {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: cuepulse 1.6s ease-in-out infinite;
+}
+@keyframes cuepulse {
+  0%,100% { transform: scaleY(1); opacity: 0.45; }
+  50%      { transform: scaleY(1.25); opacity: 1; }
+}
+
+/* ═══════════════════════════════
+   CONTENT BELOW THE HERO
+   These sections only appear after
+   the hero's 500vh scroll is done.
+══════════════════════════════════ */
+
+/* ─── STORY BAND ─── */
+.story-band {
+  position: relative;
+  padding: 7rem 2rem;
+  border-top:    0.5px solid rgba(201,169,97,0.12);
+  border-bottom: 0.5px solid rgba(201,169,97,0.12);
+  text-align: center;
+  overflow: hidden;
+  background: var(--black);
+}
+.story-band::before {
+  content: 'گلستان';
+  position: absolute;
+  font-family: 'Vazirmatn', sans-serif;
+  font-size: 22vw;
+  font-weight: 300;
+  color: rgba(139,0,0,0.055);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.story-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.5rem, 3.2vw, 2.6rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1.45;
+  max-width: 720px;
+  margin: 0 auto 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+.story-attr {
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  position: relative; z-index: 1;
+}
+
+/* ─── COLLECTION ─── */
+.collection {
+  padding: 7rem 3rem 8rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--black);
+}
+.sec-eyebrow {
+  font-size: 0.62rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 0.9rem;
+}
+.sec-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+.sec-rule {
+  width: 56px; height: 1px;
+  background: var(--gold);
+  margin: 0 auto 4.5rem;
+  opacity: 0.45;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.75rem;
+}
+
+/* Product card */
+.card {
+  position: relative;
+  border: 0.5px solid rgba(201,169,97,0.18);
+  padding: 2.75rem 2.25rem 2.25rem;
+  transition: border-color 0.4s ease, transform 0.4s ease;
+  cursor: none;
+  overflow: hidden;
+  background: var(--black);
+}
+.card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% -10%, rgba(139,0,0,0.16) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 0.45s;
+}
+.card:hover {
+  border-color: rgba(201,169,97,0.55);
+  transform: translateY(-5px);
+}
+.card:hover::before { opacity: 1; }
+
+.card.is-expandable { cursor: pointer; }
+
+.role-logo {
+  display: block;
+  height: 30px;
+  width: auto;
+  margin-bottom: 1.25rem;
+  object-fit: contain;
+  filter: saturate(1.05) contrast(1.05);
+  opacity: 0.95;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  z-index: 20000;
+}
+
+.modal.open { display: flex; }
+
+.modal-dialog {
+  width: min(980px, 100%);
+  max-height: min(86vh, 920px);
+  overflow: auto;
+  border: 0.5px solid rgba(201,169,97,0.35);
+  background: radial-gradient(ellipse at 50% -10%, rgba(139,0,0,0.18) 0%, rgba(0,0,0,0.92) 60%, rgba(0,0,0,0.96) 100%);
+  padding: 2.75rem 2.25rem 2.25rem;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border: 0.5px solid rgba(201,169,97,0.3);
+  background: transparent;
+  color: rgba(245,241,232,0.82);
+  font-size: 18px;
+  line-height: 1;
+  cursor: none;
+}
+
+.modal-close:hover {
+  border-color: rgba(201,169,97,0.75);
+  color: var(--gold);
+}
+
+.modal .card {
+  border: none;
+  padding: 0;
+  transform: none;
+  background: transparent;
+}
+
+.modal .card::before { display: none; }
+
+.card-glyph {
+  font-size: 2.6rem;
+  margin-bottom: 1.6rem;
+  display: block;
+  line-height: 1;
+}
+.card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.03em;
+}
+.card-origin {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.1rem;
+}
+.card-desc {
+  font-size: 0.82rem;
+  line-height: 1.75;
+  color: rgba(245,241,232,0.5);
+  margin-bottom: 1.5rem;
+}
+.card-desc a {
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 0.5px solid rgba(201,169,97,0.35);
+  padding-bottom: 2px;
+}
+.card-desc a:hover { border-bottom-color: rgba(201,169,97,0.75); }
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.7rem;
+  background: rgba(139,0,0,0.22);
+  border: 0.5px solid rgba(201,169,97,0.18);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.card-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--gold);
+  margin-top: 1.75rem;
+  letter-spacing: 0.05em;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 4.5rem 3rem 3.5rem;
+  border-top: 0.5px solid rgba(201,169,97,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  background: var(--black);
+}
+.tiny-btn {
+  border: 0.5px solid rgba(201,169,97,0.25);
+  background: transparent;
+  color: rgba(245,241,232,0.55);
+  padding: 0.3rem 0.55rem;
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: border-color 0.3s, color 0.3s, transform 0.3s;
+}
+.tiny-btn:hover {
+  border-color: rgba(201,169,97,0.75);
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.footer-rule {
+  width: 72px; height: 1px;
+  background: var(--gold);
+  opacity: 0.35;
+}
+.footer-nav {
+  display: flex; gap: 2.5rem;
+  list-style: none;
+}
+.footer-nav a {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.62);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-nav a:hover { color: var(--gold); }
+.footer-social {
+  display: flex; gap: 1rem;
+}
+.soc {
+  width: 36px; height: 36px;
+  border: 0.5px solid rgba(201,169,97,0.2);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(245,241,232,0.78);
+  text-decoration: none;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  transition: border-color 0.3s, color 0.3s;
+  cursor: none;
+}
+.soc:hover { border-color: var(--gold); color: var(--gold); }
+.footer-copy {
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.45);
+}
+
+/* ─── PROJECT SHOWCASE — editorial split layout ─── */
+#projects {
+  background: var(--black);
+}
+.projects-wrap {
+  padding: 7rem 3rem 8rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.project-row {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 0;
+  border-top: 0.5px solid rgba(201,169,97,0.18);
+  padding: 4rem 0;
+  transition: border-color 0.4s;
+  position: relative;
+}
+.project-row:last-child {
+  border-bottom: 0.5px solid rgba(201,169,97,0.18);
+}
+.project-row:hover {
+  border-top-color: rgba(201,169,97,0.55);
+}
+.proj-left {
+  padding-right: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.proj-index {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4rem, 8vw, 7rem);
+  font-weight: 300;
+  color: rgba(139,0,0,0.22);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  transition: color 0.4s;
+}
+.project-row:hover .proj-index {
+  color: rgba(139,0,0,0.5);
+}
+.proj-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  font-weight: 400;
+  color: var(--cream);
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+.proj-client {
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+}
+.proj-category {
+  display: inline-block;
+  padding: 0.28rem 0.8rem;
+  border: 0.5px solid rgba(201,169,97,0.22);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.4);
+  margin-bottom: 0;
+}
+.proj-right {
+  padding-left: 4rem;
+  border-left: 0.5px solid rgba(201,169,97,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.proj-role-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(201,169,97,0.55);
+  margin-bottom: 0.35rem;
+}
+.proj-role-val {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: rgba(245,241,232,0.82);
+  letter-spacing: 0.04em;
+}
+.proj-desc {
+  font-size: 0.82rem;
+  line-height: 1.82;
+  color: rgba(245,241,232,0.42);
+}
+.proj-outcome {
+  border-left: 1.5px solid rgba(139,0,0,0.55);
+  padding-left: 1.1rem;
+}
+.proj-outcome-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(139,0,0,0.8);
+  margin-bottom: 0.4rem;
+}
+.proj-outcome-text {
+  font-size: 0.8rem;
+  line-height: 1.8;
+  color: rgba(245,241,232,0.55);
+}
+.proj-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.proj-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.proj-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.65rem;
+  background: transparent;
+  border: 0.5px solid rgba(201,169,97,0.15);
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.38);
+  transition: border-color 0.3s, color 0.3s;
+}
+.project-row:hover .proj-chip {
+  border-color: rgba(201,169,97,0.3);
+  color: rgba(245,241,232,0.6);
+}
+.proj-link {
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.75;
+  transition: opacity 0.3s;
+}
+.proj-link:hover { opacity: 1; }
+.proj-arrow {
+  display: inline-block;
+  width: 22px; height: 1px;
+  background: var(--gold);
+  position: relative;
+  transition: width 0.3s;
+}
+.proj-arrow::after {
+  content: '';
+  position: absolute;
+  right: 0; top: -3px;
+  border: 3px solid transparent;
+  border-left: 5px solid var(--gold);
+}
+.proj-link:hover .proj-arrow { width: 34px; }
+
+.proj-more-wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 2.5rem;
+}
+.proj-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  border: 0.5px solid rgba(201,169,97,0.28);
+  background: rgba(0,0,0,0.22);
+  color: rgba(245,241,232,0.72);
+  padding: 0.85rem 1.2rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: border-color 0.3s, color 0.3s, transform 0.3s;
+}
+.proj-more-btn:hover {
+  border-color: rgba(201,169,97,0.85);
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+.proj-more-icon {
+  width: 14px;
+  height: 14px;
+  opacity: 0.9;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+@media (max-width: 680px) {
+  .project-row { grid-template-columns: 1fr; }
+  .proj-left { padding-right: 0; margin-bottom: 2rem; }
+  .proj-right { padding-left: 0; border-left: none; border-top: 0.5px solid rgba(201,169,97,0.1); padding-top: 2rem; }
+}
+
+/* ─── SKILLS SECTION ─── */
+#skills { background: var(--black); }
+.skills-wrap {
+  padding: 7rem 3rem 8rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.skill-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 0.5px solid rgba(201,169,97,0.18);
+  margin-bottom: 4rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.skill-tabs::-webkit-scrollbar { display: none; }
+.skill-tab {
+  background: none;
+  border: none;
+  border-bottom: 1.5px solid transparent;
+  color: rgba(245,241,232,0.3);
+  font-size: 0.58rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.6rem;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-bottom: -0.5px;
+  transition: color 0.3s, border-color 0.3s;
+  flex-shrink: 0;
+}
+.skill-tab:hover { color: rgba(245,241,232,0.65); }
+.skill-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+.skill-panel { display: none; }
+.skill-panel.active { display: block; }
+.skill-panel-inner {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 0 5rem;
+  align-items: start;
+}
+.skill-panel-aside {
+  position: sticky;
+  top: 6rem;
+}
+.skill-panel-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(5rem, 10vw, 9rem);
+  font-weight: 300;
+  color: rgba(139,0,0,0.15);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+.skill-panel-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.65rem;
+  font-weight: 300;
+  color: var(--cream);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+.skill-panel-sub {
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(201,169,97,0.5);
+  line-height: 1.6;
+}
+.skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  padding-top: 0.5rem;
+}
+.skill-pill {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  padding: 0.9rem 1.35rem 0.75rem;
+  border: 0.5px solid rgba(201,169,97,0.14);
+  cursor: default;
+  transition: border-color 0.35s, background 0.35s;
+  overflow: hidden;
+}
+.skill-pill::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: var(--lvl, 0%);
+  height: 1.5px;
+  background: linear-gradient(to right, rgba(139,0,0,0.6), rgba(201,169,97,0.7));
+  transition: width 1s cubic-bezier(0.4,0,0.2,1) var(--delay, 0s);
+}
+.skill-pill.animated::before { width: var(--lvl); }
+.skill-pill:hover {
+  border-color: rgba(201,169,97,0.45);
+  background: rgba(201,169,97,0.03);
+}
+.skill-pill-name {
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: rgba(245,241,232,0.75);
+  margin-bottom: 0.4rem;
+  line-height: 1;
+}
+.skill-pill-level {
+  font-size: 0.5rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(201,169,97,0.4);
+}
+.skill-pill[data-tier="expert"] .skill-pill-name {
+  color: rgba(245,241,232,0.9);
+}
+.skill-pill[data-tier="expert"] {
+  border-color: rgba(201,169,97,0.22);
+}
+.skill-legend {
+  display: flex;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 0.5px solid rgba(201,169,97,0.1);
+}
+.skill-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.3);
+}
+.skill-legend-line {
+  width: 28px;
+  height: 1.5px;
+}
+@media (max-width: 720px) {
+  .skill-panel-inner { grid-template-columns: 1fr; }
+  .skill-panel-aside { position: static; margin-bottom: 2.5rem; }
+  .skill-panel-num { font-size: 5rem; }
+}
+
+.nav-cv {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-left: 1.25rem;
+}
+.cv-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 0.9rem;
+  border: 0.5px solid rgba(201,169,97,0.35);
+  text-decoration: none;
+  color: rgba(245,241,232,0.86);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.22);
+  transition: border-color 0.3s, color 0.3s, transform 0.3s;
+  cursor: none;
+}
+.cv-link svg {
+  width: 14px;
+  height: 14px;
+  margin-right: 0.5rem;
+  opacity: 0.9;
+  transform: translateY(-0.5px);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.cv-link:hover {
+  border-color: rgba(201,169,97,0.85);
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+.cv-link:hover svg {
+  transform: translateY(1px);
+  opacity: 1;
+}
+
+footer .nav-cv .cv-link {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+}
+
+.ov-cta-row {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 1.1rem;
+  flex-wrap: wrap;
+}
+.ov-cta.small {
+  padding: 0.62rem 0.9rem;
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+}
+
+/* ─── REVEAL ANIMATIONS for content below hero ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s cubic-bezier(0.4,0,0.2,1),
+              transform 0.85s cubic-bezier(0.4,0,0.2,1);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: none;
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <img src="Assest/logo.png" alt="Logo" onerror="this.style.display='none'">
+    <span data-en="Omid Ahmadi" data-fa="امید احمدی">Omid Ahmadi</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#collection" data-en="Experience" data-fa="تجربه">Experience</a></li>
+      <li><a href="#story" data-en="About" data-fa="درباره">About</a></li>
+      <li><a href="#projects" data-en="Projects" data-fa="پروژه‌ها">Projects</a></li>
+      <li><a href="#skills" data-en="Skills" data-fa="مهارت‌ها">Skills</a></li>
+      <li><a href="#contact" data-en="Contact" data-fa="تماس">Contact</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button id="btn-en" class="lang-btn active"  onclick="setLang('en')">EN</button>
+      <span class="lang-sep">·</span>
+      <button id="btn-fa" class="lang-btn inactive" onclick="setLang('fa')">FA</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HERO — 500vh scroll cinematic
+     Photo lives ONLY inside this section.
+     Once user scrolls past the full hero,
+     the sticky container is released and
+     the photo disappears naturally with it.
+══════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-sticky">
+
+    <div class="grain"></div>
+
+    <!-- ── PHOTO + BACKGROUND (hero only) ── -->
+    <div class="hero-bg">
+      <div class="vid-placeholder">
+        <div class="crimson-haze"></div>
+        <div class="particles-layer" id="particles"></div>
+
+        <!-- Photo fades slightly as overlays change, but always within hero -->
+        <div class="photo-wrap" id="photoWrap">
+          <img class="profile-photo"
+               src="Assest/Omid-Ahmadi.jpeg"
+               alt="Omid Ahmadi"
+               onerror="this.src='https://placehold.co/280x280/1a0000/c9a961?text=OA'">
+        </div>
+
+        <div class="hero-location" data-en="Software Development Engineer in Test" data-fa="لس‌آنجلس، کالیفرنیا · مهندس توسعه نرم‌افزار در تست">
+           Software Development Engineer in Test
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery corner frame -->
+    <div class="gallery-frame">
+      <div class="crn crn-tl"></div>
+      <div class="crn crn-tr"></div>
+      <div class="crn crn-bl"></div>
+      <div class="crn crn-br"></div>
+    </div>
+
+    <!-- ── OVERLAY 0 — Name (photo visible, text sits at bottom so photo is the hero) ── -->
+    <div class="overlay visible" id="ov0">
+      <h1 class="ov-title" style="font-size:clamp(3.5rem,9vw,8rem);">
+        OMID<br><span class="g">AHMADI</span>
+      </h1>
+      <p class="ov-sub" data-en=" Los Angeles, California" data-fa="· لس‌آنجلس، کالیفرنیا"> Los Angeles, California</p>
+    </div>
+
+    <!-- ── OVERLAY 1 — Skills ── -->
+    <div class="overlay hidden-below" id="ov1">
+      <p class="ov-eyebrow" data-en="TOP SKILLS" data-fa="مهارت‌های کلیدی">TOP SKILLS</p>
+      <h2 class="ov-title" style="font-size:clamp(2.2rem,6vw,5.5rem);">Quality<br>Engineering</h2>
+      <p class="ov-sub" data-en="Agile · API Testing · Java · Manual Testing · Selenium WebDriver" data-fa="اجایل · تست API · جاوا · تست دستی · سلنیوم">
+        Agile · API Testing · Java · Manual Testing · Selenium WebDriver
+      </p>
+    </div>
+
+    <!-- ── OVERLAY 2 — What I do ── -->
+    <div class="overlay hidden-below" id="ov2">
+      <p class="ov-eyebrow" data-en="WHAT I DO" data-fa="کاری که انجام می‌دهم">WHAT I DO</p>
+      <h2 class="ov-title" style="font-size:clamp(2.2rem,6vw,5.5rem);">
+        Test.<br>Automate.<br>Ship.
+      </h2>
+    </div>
+
+    <!-- ── OVERLAY 3 — CTA (photo has faded, clean call-to-action) ── -->
+    <div class="overlay hidden-below" id="ov3">
+      <p class="ov-eyebrow" data-en="OPEN TO WORK" data-fa="آماده همکاری">OPEN TO WORK</p>
+      <h2 class="ov-title" style="font-size:clamp(1.8rem,4.5vw,4rem);">
+        Let's Build<br>Quality
+      </h2>
+      <a href="#contact" class="ov-cta" data-en="Contact" data-fa="تماس">Contact</a>
+      <div class="ov-cta-row">
+        <a class="ov-cta small" href="Assest/Omid-Ahmadi-Resume.pdf" download data-en="Download CV (PDF)" data-fa="دانلود رزومه (PDF)">Download CV (PDF)</a>
+        <a class="ov-cta small" href="Assest/Omid-Ahmadi-Resume.docx" download data-en="Download CV (Word)" data-fa="دانلود رزومه (Word)">Download CV (Word)</a>
+      </div>
+    </div>
+
+    <!-- Scroll cue (fades after 3.5s) -->
+    <div class="scroll-cue">
+      <span class="cue-text" data-en="Scroll" data-fa="اسکرول">Scroll</span>
+      <div class="cue-line"></div>
+    </div>
+
+  </div><!-- /hero-sticky -->
+</section><!-- /hero — after this, the photo is gone -->
+
+
+<!-- ═══════════════════════════════════════
+     CONTENT — only visible after hero ends
+══════════════════════════════════════════ -->
+
+<section class="story-band reveal" id="story">
+  <blockquote class="story-quote"
+    data-en='"Senior Quality Assurance Engineer with 7+ years of experience delivering reliable software through strong test strategy and automation across web, mobile, API, desktop, and cloud."'
+    data-fa='"مهندس ارشد تضمین کیفیت با بیش از ۷ سال تجربه در ارائه نرم‌افزار قابل اعتماد با استراتژی تست و اتوماسیون در وب، موبایل، API، دسکتاپ و کلاد."'>
+    "Senior Quality Assurance Engineer with 7+ years of experience delivering reliable software through strong test strategy and automation across web, mobile, API, desktop, and cloud."
+  </blockquote>
+  <p class="story-attr" data-en="Los Angeles, California · United States" data-fa="لس‌آنجلس، کالیفرنیا · ایالات متحده">Los Angeles, California · United States</p>
+</section>
+
+<section id="collection" style="background:var(--black);">
+  <div class="collection">
+    <p class="sec-eyebrow reveal" data-en="Experience" data-fa="تجربه">Experience</p>
+    <h2 class="sec-title reveal" data-en="Selected Roles" data-fa="سوابق منتخب">Selected Roles</h2>
+    <div class="sec-rule reveal"></div>
+
+    <div class="cards-grid">
+
+      <div class="card reveal">
+        <img class="role-logo" src="Assest/AT&T_logo.png" alt="AT&T" onerror="this.style.display='none'">
+        <span class="card-glyph">AT&T</span>
+        <h3 class="card-name" data-en="Senior Quality Assurance Engineer (DIRECTV)" data-fa="مهندس ارشد تضمین کیفیت (DIRECTV)">Senior Quality Assurance Engineer (DIRECTV)</h3>
+        <p class="card-origin" data-en="AT&T · Contract · Feb 2023 — Present" data-fa="AT&T · قراردادی · ۲۰۲۳ تا اکنون">AT&T · Contract · Feb 2023 — Present</p>
+        <p class="card-desc"
+          data-en-preview="Built and maintained automation across UI and API layers (Playwright, Cypress, SpecFlow/BDD). Integrated suites into CI/CD (Jenkins) and supported SDLC testing from requirements through release."
+          data-fa-preview="اتوماسیون تست در لایه‌های UI و API (Playwright، Cypress، SpecFlow/BDD). یکپارچه‌سازی در CI/CD (Jenkins) و پشتیبانی از SDLC از تحلیل نیازمندی تا انتشار."
+          data-en="I designed and developed a BDD framework using SpecFlow (Cucumber Specification), adding Scenarios in feature files and Step Definitions.<br>Additionally, I utilized Jenkins for continuous integration to inspect code quality, and worked on building a local repository mirror and source code management using Git.<br>I have experience using different Selenium locators such as XPath and CSS Selectors along with WebDriver for carrying out web application testing.<br>I developed automation scripts using JavaScript on the Cypress Automation Framework.<br>Wrote and executed automated tests in TypeScript/Playwright for a browser-based application.<br>Involved in the SDLC phase of requirement analysis, design, and development of the web-based intranet application tool using Web API and C#.<br>Converted manual test cases from HP ALM/QC into automated test scripts in HP QTP/UFT using object repository and descriptive programming; analyzed test results to ensure requirements were met and existing system requirements still held.<br>Involved in the development of automation scripts with Coded UI Framework / C# and performed execution against QA environment builds.<br>Worked with the team to convert Gherkin feature stories into Playwright automation scripts that were executable.<br>Worked in DevOps, installing, configuring, and integrating automation scripts on CI/CD tools like Jenkins for nightly test suite execution; gained knowledge in testing and configuring AWS.<br>Used Postman to test APIs and ensure headers, URLs, client IDs, and client secrets were valid; applied the test automation framework to CI/CD using Jenkins.<br>Tested REST API calls using POST, GET, PUT, and DELETE with both Postman and Playwright tools.<br>Tested encryption and decryption of login and logout functionality developed in C#.NET."
+          data-fa="I designed and developed a BDD framework using SpecFlow (Cucumber Specification), adding Scenarios in feature files and Step Definitions.<br>Additionally, I utilized Jenkins for continuous integration to inspect code quality, and worked on building a local repository mirror and source code management using Git.<br>I have experience using different Selenium locators such as XPath and CSS Selectors along with WebDriver for carrying out web application testing.<br>I developed automation scripts using JavaScript on the Cypress Automation Framework.<br>Wrote and executed automated tests in TypeScript/Playwright for a browser-based application.<br>Involved in the SDLC phase of requirement analysis, design, and development of the web-based intranet application tool using Web API and C#.<br>Converted manual test cases from HP ALM/QC into automated test scripts in HP QTP/UFT using object repository and descriptive programming; analyzed test results to ensure requirements were met and existing system requirements still held.<br>Involved in the development of automation scripts with Coded UI Framework / C# and performed execution against QA environment builds.<br>Worked with the team to convert Gherkin feature stories into Playwright automation scripts that were executable.<br>Worked in DevOps, installing, configuring, and integrating automation scripts on CI/CD tools like Jenkins for nightly test suite execution; gained knowledge in testing and configuring AWS.<br>Used Postman to test APIs and ensure headers, URLs, client IDs, and client secrets were valid; applied the test automation framework to CI/CD using Jenkins.<br>Tested REST API calls using POST, GET, PUT, and DELETE with both Postman and Playwright tools.<br>Tested encryption and decryption of login and logout functionality developed in C#.NET.">
+          Built and maintained automation across UI and API layers (Playwright, Cypress, SpecFlow/BDD). Integrated suites into CI/CD (Jenkins) and supported SDLC testing from requirements through release.
+        </p>
+        <div class="chips">
+          <span class="chip">Playwright</span>
+          <span class="chip">Cypress</span>
+          <span class="chip">Jenkins</span>
+        </div>
+        <p class="card-price" data-en="Los Angeles · Hybrid" data-fa="لس‌آنجلس · هیبرید">Los Angeles · Hybrid</p>
+      </div>
+
+      <div class="card reveal">
+        <span class="card-glyph">UB</span>
+        <h3 class="card-name" data-en="Test Automation Engineer" data-fa="مهندس اتوماسیون تست">Test Automation Engineer</h3>
+        <p class="card-origin" data-en="Universal Bank · Contract · Jan 2021 — Feb 2023" data-fa="Universal Bank · قراردادی · ۲۰۲۱ تا ۲۰۲۳">Universal Bank · Contract · Jan 2021 — Feb 2023</p>
+        <p class="card-desc"
+          data-en-preview="Developed and maintained scalable automation frameworks using Java, C#, Selenium WebDriver, and JUnit to ensure reliable and efficient testing processes."
+          data-fa-preview="توسعه و نگهداری فریم‌ورک‌های اتوماسیون مقیاس‌پذیر با Java، C#، Selenium WebDriver و JUnit برای تضمین فرایندهای تست قابل اعتماد و کارآمد."
+          data-en="Developed and maintained scalable automation frameworks using Java, C#, Selenium WebDriver, and JUnit to ensure reliable and efficient testing processes.<br>Automated backend API testing using REST Assured and Karate, validating data flow and integration across microservices.<br>Created and executed detailed test plans, test cases, and regression suites for both frontend and backend systems.<br>Integrated automated test suites into CI/CD pipelines using Jenkins and Docker for continuous testing and deployment.<br>Implemented BDD frameworks with Cucumber and Gherkin, improving collaboration between QA, development, and business teams.<br>Performed backend data validation using SQL queries in Oracle databases, ensuring data integrity across ETL processes.<br>Utilized GitHub for version control and Jira for project tracking, issue management, and sprint progress monitoring.<br>Leveraged Zephyr (Jira plug-in) for efficient test case management, scheduling, and detailed reporting.<br>Conducted cross-browser UI testing using Selenium Grid, ensuring consistent performance across Chrome, Firefox, and Edge.<br>Designed and implemented the Page Object Model (POM) structure to improve code reusability and maintenance.<br>Used Postman and curl for manual and automated API testing, validating REST endpoints and request/response payloads.<br>Enhanced CI/CD best practices by integrating smoke and regression tests for faster release validation cycles.<br>Automated workflows in Azure, managing subscriptions and storage accounts with PowerShell scripts for cloud-based testing.<br>Collaborated with cross-functional teams to analyze business requirements, identify defects, and ensure end-to-end product quality.<br>Demonstrated strong analytical skills, ownership, and a customer-focused approach to continuously improve QA processes."
+          data-fa="توسعه و نگهداری فریم‌ورک‌های اتوماسیون مقیاس‌پذیر با Java، C#، Selenium WebDriver و JUnit برای تضمین فرایندهای تست قابل اعتماد و کارآمد.">
+          Developed and maintained scalable automation frameworks using Java, C#, Selenium WebDriver, and JUnit to ensure reliable and efficient testing processes.
+        </p>
+        <div class="chips">
+          <span class="chip">Selenium</span>
+          <span class="chip">REST Assured</span>
+          <span class="chip">Docker</span>
+        </div>
+        <p class="card-price" data-en="Los Angeles · Hybrid" data-fa="لس‌آنجلس · هیبرید">Los Angeles · Hybrid</p>
+      </div>
+
+      <div class="card reveal">
+        <span class="card-glyph">CI</span>
+        <h3 class="card-name" data-en="QA Automation Engineer" data-fa="مهندس اتوماسیون QA">QA Automation Engineer</h3>
+        <p class="card-origin" data-en="Cigna Insurance Services · Contract · Mar 2018 — Dec 2020" data-fa="Cigna · قراردادی · ۲۰۱۸ تا ۲۰۲۰">Cigna Insurance Services · Contract · Mar 2018 — Dec 2020</p>
+        <p class="card-desc"
+          data-en-preview="Created data access layer using Entity Framework DB first approach to handle all scripts execution results. Worked in a DevOps agile environment to achieve CI/CD."
+          data-fa-preview="ایجاد لایه دسترسی به داده با رویکرد Entity Framework (DB First) برای مدیریت نتایج اجرای اسکریپت‌ها و کار در محیط DevOps/Agile برای دستیابی به CI/CD."
+          data-en="Created data access layer using Entity Framework DB first approach to handle all scripts execution results. Worked in a DevOps agile environment to achieve CI/CD.<br>I developed automated test scripts using Playwright, a modern testing framework for web applications. The scripts covered functional, regression, integration, and performance testing aspects of the software.<br>Created test cases in HP ALM, extended the test case writing by setting Configurations, Parameterization, linking requirements, linking failed defects etc.<br>Involved in Functional Testing as Unit test, Test Suite, Integration Testing using different TestNG methods.<br>Implemented automation framework from scratch using Selenium Web driver, C#, JAVA, JUnit and Eclipse.<br>Created feature files and scenarios using BDD, Spec Flow capabilities in Visual studio as part of Xamarin Automation.<br>Performed Testing Web services REST APIs using Postman and C# to automate.<br>Verified the list of the Thumbnails are successfully migrated to the AWS-S3 bucket. Verified Thumbnails are migrated to the AWS S3 bucket in correct path and are viewable/ downloadable.<br>Responsible for Continuous Integration (CI) and Continuous Delivery (CD) process implementation using Jenkins. Involved in Automation and Manual Testing of Application using Coded UI.<br>Design of Cloud architectures for customers looking to migrate or develop new PaaS, IaaS, or hybrid solutions utilizing Microsoft Azure or Amazon Web Services (AWS). Designed and developed Hybrid Framework using .Net, C#, and NUnit. Creating test scripts using C# and Selenium Web Driver for the functional test cases.<br>Worked on Azure on Microsoft, experienced on to deploy workloads on Azure Resource Manager (ARM) Virtual Machines. Worked on Azure DevOps (Visual Studio Team Services).<br>Involved in Functionality, User Interface, and Regression testing during the various phases of Assisted DevOps team with build cycles and CI-CD processes using Jenkins, GitHub and Maven.<br>Unit Testing, SQL and +58 skills"
+          data-fa="ایجاد لایه دسترسی به داده با رویکرد Entity Framework (DB First) برای مدیریت نتایج اجرای اسکریپت‌ها و کار در محیط DevOps/Agile برای دستیابی به CI/CD.">
+          Created data access layer using Entity Framework DB first approach to handle all scripts execution results. Worked in a DevOps agile environment to achieve CI/CD.
+        </p>
+        <div class="chips">
+          <span class="chip">Playwright</span>
+          <span class="chip">Postman</span>
+          <span class="chip">Azure DevOps</span>
+        </div>
+        <p class="card-price" data-en="Washington · Remote" data-fa="واشینگتن · ریموت">Washington · Remote</p>
+      </div>
+
+      <div class="card reveal">
+        <span class="card-glyph">SF</span>
+        <h3 class="card-name" data-en="QA Analyst (Manual Tester)" data-fa="تحلیل‌گر QA (تست دستی)">QA Analyst (Manual Tester)</h3>
+        <p class="card-origin" data-en="State Farm · Contract · Jan 2016 — Feb 2018 · 2 yrs 2 mos" data-fa="State Farm · قراردادی · ۲۰۱۶ تا ۲۰۱۸ · ۲ سال و ۲ ماه">State Farm · Contract · Jan 2016 — Feb 2018 · 2 yrs 2 mos</p>
+        <p class="card-desc"
+          data-en-preview="Creation of Test Requirements Specification documents, Test plans, and Test Result documentation. Writing SQL queries for data verification during backend testing against Oracle."
+          data-fa-preview="تهیه مستندات نیازمندی‌های تست، برنامه‌های تست و نتایج تست. نوشتن کوئری‌های SQL برای بررسی داده‌ها در تست بک‌اند روی Oracle."
+          data-en="Creation of Test Requirements Specification documents, Test plans, and Test Result documentation.<br>Writing Structure Query Language (SQL) queries for data population checks and verification during Backend Testing against Oracle Database.<br>Preparation of meeting notes highlighting daily project execution and sending reports to management.<br>Collaboration with Developers and Business Analysts to conduct various testing types throughout the Software Testing Life Cycle (STLC) and Bug Life Cycle (BLC).<br>Analysis of Business Requirements Document and system specifications to determine test requirements.<br>Performing Backend testing using SQL Plus and PL/SQL.<br>Implemented data-driven testing approaches, utilizing property and XML files to enhance test flexibility and coverage.<br>Used SOAP UI and Rest Assured frameworks to rigorously test SOAP services and REST APIs in a SOA based architecture.<br>Actively engaged in Agile Scrum ceremonies including daily stand-ups, sprint planning, reviews, and retrospectives, consistently delivering tested sprint increments aligned with business priorities.<br>Created automation scripts not only in Java but also in C# leveraging the .NET framework, broadening test coverage across diverse technology stacks.<br>Supported build and deployment pipelines by collaborating with DevOps teams using Jenkins, GitHub, and Maven helping embed automated tests into the delivery lifecycle.<br>Conducting Functional, Integration, Regression, Positive, Negative, and User Acceptance Testing (UAT).<br>Creation and maintenance of all Test automation environments.<br>Active involvement in day-to-day Scrum meetings.<br>Working closely with QA Director to align with organizational goals and objectives.<br><br>Environment:<br><br>Agile, XML, HTML, Fire Path, Firebug, Internet Explorer, Google Chrome, Jira, Azure, Safari, Mozilla Firefox, JIRA, Quality Center, SQL, Oracle, Windows.<br><br>Unit Testing, SQL and +56 skills"
+          data-fa="تهیه مستندات نیازمندی‌های تست، برنامه‌های تست و نتایج تست. نوشتن کوئری‌های SQL برای بررسی داده‌ها در تست بک‌اند روی Oracle.">
+          Creation of Test Requirements Specification documents, Test plans, and Test Result documentation. Writing SQL queries for data verification during backend testing against Oracle.
+        </p>
+        <div class="chips">
+          <span class="chip">SQL</span>
+          <span class="chip">SOAP UI</span>
+          <span class="chip">Agile</span>
+        </div>
+        <p class="card-price" data-en="Chevy Chase, Maryland, United States · Remote" data-fa="مریلند، ایالات متحده · ریموت">Chevy Chase, Maryland, United States · Remote</p>
+      </div>
+
+    </div>
+
+    <p class="sec-eyebrow reveal" style="margin-top:5rem;" data-en="Mentoring" data-fa="منتورینگ">Mentoring</p>
+    <h2 class="sec-title reveal" style="font-size:clamp(1.9rem,3.6vw,3.1rem);" data-en="Mentor" data-fa="منتور">Mentor</h2>
+    <div class="sec-rule reveal"></div>
+    <div class="cards-grid">
+      <div class="card reveal">
+        <img class="role-logo" src="Assest/LA Tech.png" alt="LA-Tech.org" onerror="this.style.display='none'">
+        <span class="card-glyph">LT</span>
+        <h3 class="card-name" data-en="Mentor" data-fa="منتور">Mentor</h3>
+        <p class="card-origin" data-en="LA-Tech.org · Apr 2026 — Present" data-fa="LA-Tech.org · ۲۰۲۶ تا اکنون">LA-Tech.org · Apr 2026 — Present</p>
+        <p class="card-desc"
+          data-en="Mentor at LA Tech, guiding aspiring tech professionals in building technical skills, sharing industry insights, and growing confidence in their career paths."
+          data-fa="Mentor at LA Tech, guiding aspiring tech professionals in building technical skills, sharing industry insights, and growing confidence in their career paths.">
+          Mentor at LA Tech, guiding aspiring tech professionals in building technical skills, sharing industry insights, and growing confidence in their career paths.
+        </p>
+        <div class="chips">
+          <span class="chip">Science</span>
+          <span class="chip">Technology</span>
+          <span class="chip">Mentorship</span>
+        </div>
+        <p class="card-price" data-en="Los Angeles · Volunteer" data-fa="لس‌آنجلس · داوطلب">Los Angeles · Volunteer</p>
+      </div>
+    </div>
+
+    <p class="sec-eyebrow reveal" style="margin-top:5rem;" data-en="Education" data-fa="تحصیلات">Education</p>
+    <h2 class="sec-title reveal" style="font-size:clamp(1.9rem,3.6vw,3.1rem);" data-en="Jami University" data-fa="دانشگاه جامی">Jami University</h2>
+    <div class="sec-rule reveal"></div>
+    <div class="cards-grid">
+      <div class="card reveal">
+        <span class="card-glyph">🎓</span>
+        <h3 class="card-name" data-en="Bachelor's Degree" data-fa="کارشناسی">Bachelor's Degree</h3>
+        <p class="card-origin" data-en="Jami University · 2012 — 2015" data-fa="دانشگاه جامی · ۲۰۱۲ تا ۲۰۱۵">Jami University · 2012 — 2015</p>
+        <p class="card-desc"
+          data-en="Computer and Information Sciences and Support Services."
+          data-fa="علوم کامپیوتر و سیستم‌های اطلاعاتی.">
+          Computer and Information Sciences and Support Services.
+        </p>
+        <div class="chips">
+          <span class="chip">Automation</span>
+          <span class="chip">API Testing</span>
+          <span class="chip">CI/CD</span>
+        </div>
+        <p class="card-price" data-en="Los Angeles, CA" data-fa="لس‌آنجلس">Los Angeles, CA</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" style="background:var(--black);">
+  <div class="projects-wrap">
+    <p class="sec-eyebrow reveal" data-en="Projects" data-fa="پروژه‌ها">Projects</p>
+    <h2 class="sec-title reveal" data-en="Selected Work" data-fa="نمونه کارها">Selected Work</h2>
+    <div class="sec-rule reveal"></div>
+
+    <!-- Project 1: DirecTV SignalSaver -->
+    <div class="project-row reveal">
+      <div class="proj-left">
+        <div>
+          <div class="proj-index">01</div>
+          <h3 class="proj-name" data-en="DirecTV SignalSaver" data-fa="DirecTV SignalSaver">DirecTV SignalSaver</h3>
+          <p class="proj-client" data-en="AT&amp;T / DirecTV · 2023 — Present" data-fa="AT&amp;T / DirecTV · ۲۰۲۳ تا اکنون">AT&amp;T / DirecTV · 2023 — Present</p>
+        </div>
+        <span class="proj-category" data-en="Enterprise · Media &amp; Broadcast" data-fa="سازمانی · رسانه">Enterprise · Media &amp; Broadcast</span>
+      </div>
+      <div class="proj-right">
+        <div>
+          <p class="proj-role-label" data-en="QA Role" data-fa="نقش QA">QA Role</p>
+          <p class="proj-role-val" data-en="Senior QA Automation Engineer" data-fa="مهندس ارشد اتوماسیون QA">Senior QA Automation Engineer</p>
+        </div>
+        <p class="proj-desc"
+          data-en="SignalSaver is a flagship DirecTV feature that detects and recovers satellite signal interruptions in real time — serving millions of subscribers. I owned end-to-end test coverage from requirements through production release, on a system where uptime failures are immediately visible to millions of viewers."
+          data-fa="SignalSaver یک قابلیت کلیدی DirecTV است که قطعی‌های سیگنال ماهواره‌ای را در زمان واقعی شناسایی و بازیابی می‌کند.">
+          SignalSaver is a flagship DirecTV feature that detects and recovers satellite signal interruptions in real time — serving millions of subscribers. I owned end-to-end test coverage from requirements through production release, on a system where uptime failures are immediately visible to millions of viewers.
+        </p>
+        <div class="proj-outcome">
+          <p class="proj-outcome-label" data-en="QA Approach" data-fa="رویکرد QA">QA Approach</p>
+          <p class="proj-outcome-text"
+            data-en="Built Playwright + TypeScript E2E suite covering signal-loss simulation, recovery timing, and fallback flows. Validated REST APIs via Postman. Integrated regression suite into Jenkins CI/CD for nightly execution."
+            data-fa="ساخت مجموعه E2E با Playwright و TypeScript، اعتبارسنجی API های REST و یکپارچه‌سازی در Jenkins CI/CD.">
+            Built Playwright + TypeScript E2E suite covering signal-loss simulation, recovery timing, and fallback flows. Validated REST APIs via Postman. Integrated regression suite into Jenkins CI/CD for nightly execution.
+          </p>
+        </div>
+        <div class="proj-bottom">
+          <div class="proj-chips">
+            <span class="proj-chip">Playwright</span>
+            <span class="proj-chip">TypeScript</span>
+            <span class="proj-chip">Jenkins</span>
+            <span class="proj-chip">Postman</span>
+            <span class="proj-chip">BDD / SpecFlow</span>
+          </div>
+          <a class="proj-link" href="https://www.directv.com/insider/news/never-miss-a-moment-with-directv-signalsaver/" target="_blank" rel="noreferrer">
+            <span data-en="View Feature" data-fa="مشاهده">View Feature</span>
+            <span class="proj-arrow"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2: California Center Digital Twins Hub — Project Lead -->
+    <div class="project-row reveal" style="border-top-color: rgba(201,169,97,0.42);">
+      <div class="proj-left">
+        <div>
+          <div class="proj-index" style="color: rgba(201,169,97,0.35);">02</div>
+          <h3 class="proj-name" data-en="California Center Digital Twins Hub" data-fa="مرکز دوقلوهای دیجیتال کالیفرنیا">California Center Digital Twins Hub</h3>
+          <p class="proj-client" data-en="California Center for Climate Change Education · 2025 — Present" data-fa="مرکز آموزش تغییر اقلیم کالیفرنیا · ۲۰۲۵ تا اکنون">CA Center for Climate Change Education · 2025 — Present</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:auto;">
+          <span class="proj-category" style="border-color:rgba(201,169,97,0.4);color:rgba(201,169,97,0.7);" data-en="Project Lead · Built from Scratch" data-fa="رهبر پروژه · از صفر ساخته شده">Project Lead · Built from Scratch</span>
+        </div>
+      </div>
+      <div class="proj-right">
+        <div>
+          <p class="proj-role-label" style="color:rgba(201,169,97,0.8);" data-en="Role" data-fa="نقش">Role</p>
+          <p class="proj-role-val" style="color:var(--cream);" data-en="Project Lead — Architecture, QA &amp; Delivery" data-fa="رهبر پروژه — معماری، QA و تحویل">Project Lead — Architecture, QA &amp; Delivery</p>
+        </div>
+        <p class="proj-desc"
+          data-en="The Digital Twins Hub is the central platform for the California Center for Climate Change Education — aggregating all digital twin and geospatial projects across Los Angeles into a unified, navigable hub. Built entirely from scratch, this platform serves as the organizational home for research, community tools, and interactive visualizations developed under the AEC Fellow program."
+          data-fa="مرکز دوقلوهای دیجیتال پلتفرم مرکزی مرکز آموزش تغییر اقلیم کالیفرنیا است که تمام پروژه‌های دوقلوی دیجیتال را در یک مرکز یکپارچه و قابل پیمایش گرد هم می‌آورد.">
+          The Digital Twins Hub is the central platform for the California Center for Climate Change Education — aggregating all digital twin and geospatial projects across Los Angeles into a unified, navigable hub. Built entirely from scratch, this platform serves as the organizational home for research, community tools, and interactive visualizations developed under the AEC Fellow program.
+        </p>
+        <div class="proj-outcome" style="border-left-color: rgba(201,169,97,0.5);">
+          <p class="proj-outcome-label" style="color:rgba(201,169,97,0.85);" data-en="Project Lead Scope" data-fa="حوزه رهبری پروژه">Project Lead Scope</p>
+          <p class="proj-outcome-text" style="color:rgba(245,241,232,0.65);"
+            data-en="Led end-to-end delivery: platform architecture, information design, and integration of all sub-projects (USGBC, Shade-LA, Pando, PUHC, Baldwin, ASU Reclamation). Defined QA strategy across the entire hub — content accuracy, navigation integrity, cross-project link validation, responsive layout, and accessibility. Coordinated development, research, and community stakeholder teams to ensure quality and on-time delivery."
+            data-fa="رهبری تحویل کامل: معماری پلتفرم، طراحی اطلاعات و یکپارچه‌سازی تمام زیرپروژه‌ها. تعریف استراتژی QA در سراسر مرکز و هماهنگی بین تیم‌های توسعه، تحقیق و ذینفعان جامعه.">
+            Led end-to-end delivery: platform architecture, information design, and integration of all sub-projects (USGBC, Shade-LA, Pando, PUHC, Baldwin, ASU Reclamation). Defined QA strategy across the entire hub — content accuracy, navigation integrity, cross-project link validation, responsive layout, and accessibility. Coordinated development, research, and community stakeholder teams to ensure quality and on-time delivery.
+          </p>
+        </div>
+        <div class="proj-bottom">
+          <div class="proj-chips">
+            <span class="proj-chip" style="border-color:rgba(201,169,97,0.3);color:rgba(201,169,97,0.7);">End-to-End QA</span>
+            <span class="proj-chip" style="border-color:rgba(201,169,97,0.3);color:rgba(201,169,97,0.7);">Platform Architecture</span>
+            <span class="proj-chip" style="border-color:rgba(201,169,97,0.3);color:rgba(201,169,97,0.7);">Project Lead</span>
+            <span class="proj-chip" style="border-color:rgba(201,169,97,0.3);color:rgba(201,169,97,0.7);">Stakeholder Coordination</span>
+            <span class="proj-chip" style="border-color:rgba(201,169,97,0.3);color:rgba(201,169,97,0.7);">Accessibility</span>
+          </div>
+          <a class="proj-link" href="https://californiacenterdigitaltwins.com/#/" target="_blank" rel="noreferrer" style="opacity:1;">
+            <span data-en="View Platform" data-fa="مشاهده پلتفرم">View Platform</span>
+            <span class="proj-arrow"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 3: Shade-LA -->
+    <div class="project-row reveal">
+      <div class="proj-left">
+        <div>
+          <div class="proj-index">03</div>
+          <h3 class="proj-name" data-en="Shade-LA" data-fa="Shade-LA">Shade-LA</h3>
+          <p class="proj-client" data-en="DigitalTwinsHub · 2025" data-fa="DigitalTwinsHub · ۲۰۲۵">DigitalTwinsHub · 2025</p>
+        </div>
+        <span class="proj-category" data-en="Geospatial · Climate Tech" data-fa="جغرافیای فضایی · اقلیم">Geospatial · Climate Tech</span>
+      </div>
+      <div class="proj-right">
+        <div>
+          <p class="proj-role-label" data-en="QA Role" data-fa="نقش QA">QA Role</p>
+          <p class="proj-role-val" data-en="Geospatial &amp; Frontend QA Engineer" data-fa="مهندس QA جغرافیای فضایی">Geospatial &amp; Frontend QA Engineer</p>
+        </div>
+        <p class="proj-desc"
+          data-en="A heat and shade mapping tool for Los Angeles, helping residents and city planners identify cool corridors, shaded transit stops, and urban heat islands — with a focus on equity in underserved neighborhoods."
+          data-fa="یک ابزار نقشه‌برداری گرما و سایه برای لس‌آنجلس که به ساکنان و برنامه‌ریزان شهری کمک می‌کند کریدورهای خنک را شناسایی کنند.">
+          A heat and shade mapping tool for Los Angeles, helping residents and city planners identify cool corridors, shaded transit stops, and urban heat islands — with a focus on equity in underserved neighborhoods.
+        </p>
+        <div class="proj-outcome">
+          <p class="proj-outcome-label" data-en="QA Approach" data-fa="رویکرد QA">QA Approach</p>
+          <p class="proj-outcome-text"
+            data-en="Validated map layer rendering accuracy across zoom levels and geographic boundaries. Tested data overlay consistency between shade coverage and the underlying street/transit map. Mobile-first responsiveness testing for field use. Cross-browser verification across Chrome, Firefox, and Safari."
+            data-fa="اعتبارسنجی دقت رندرینگ لایه نقشه، تست سازگاری داده‌ها و تست ریسپانسیو برای استفاده در میدان.">
+            Validated map layer rendering accuracy across zoom levels and geographic boundaries. Tested data overlay consistency between shade coverage and the underlying street/transit map. Mobile-first responsiveness testing for field use. Cross-browser verification across Chrome, Firefox, and Safari.
+          </p>
+        </div>
+        <div class="proj-bottom">
+          <div class="proj-chips">
+            <span class="proj-chip">Geospatial QA</span>
+            <span class="proj-chip">Cross-browser</span>
+            <span class="proj-chip">Mobile Testing</span>
+            <span class="proj-chip">Map Validation</span>
+          </div>
+          <a class="proj-link" href="https://digitaltwinshub2025.github.io/Shade-LA/" target="_blank" rel="noreferrer">
+            <span data-en="View Project" data-fa="مشاهده">View Project</span>
+            <span class="proj-arrow"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-more-wrap reveal" id="proj-more-wrap">
+      <button class="proj-more-btn" id="proj-more-btn" type="button">
+        <svg class="proj-more-icon" id="proj-more-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <line x1="7" y1="2" x2="7" y2="12" stroke="currentColor" stroke-width="0.8"/>
+          <line x1="2" y1="7" x2="12" y2="7" stroke="currentColor" stroke-width="0.8"/>
+        </svg>
+        <span id="proj-more-label" data-en="See 5 More Projects" data-fa="۵ پروژه دیگر">See 5 More Projects</span>
+      </button>
+    </div>
+
+    <div id="proj-hidden" style="max-height:0; overflow:hidden; transition:max-height 1s cubic-bezier(0.4,0,0.2,1);">
+
+      <div class="project-row reveal">
+        <div class="proj-left">
+          <div>
+            <div class="proj-index">04</div>
+            <h3 class="proj-name" data-en="USGBC Wildfire Resilience Guide" data-fa="راهنمای تاب‌آوری USGBC">USGBC Wildfire Resilience Guide</h3>
+            <p class="proj-client" data-en="U.S. Green Building Council · 2025" data-fa="شورای ساختمان سبز آمریکا · ۲۰۲۵">U.S. Green Building Council · 2025</p>
+          </div>
+          <span class="proj-category" data-en="Civic Tech · Disaster Recovery" data-fa="فناوری مدنی · بازیابی بحران">Civic Tech · Disaster Recovery</span>
+        </div>
+        <div class="proj-right">
+          <div>
+            <p class="proj-role-label" data-en="QA Role" data-fa="نقش QA">QA Role</p>
+            <p class="proj-role-val" data-en="Functional & Accessibility Tester" data-fa="تستر عملکردی و دسترس‌پذیری">Functional & Accessibility Tester</p>
+          </div>
+          <p class="proj-desc"
+            data-en="An interactive recovery guide for the Altadena/Pasadena wildfire communities, presenting demographic data, interactive maps, and bilingual (EN/ES) content for residents, government agencies, and NGOs navigating the rebuilding process."
+            data-fa="یک راهنمای بازیابی تعاملی برای جوامع آسیب‌دیده از آتش‌سوزی، با داده‌های جمعیتی، نقشه‌های تعاملی و محتوای دوزبانه.">
+            An interactive recovery guide for the Altadena/Pasadena wildfire communities, presenting demographic data, interactive maps, and bilingual (EN/ES) content for residents, government agencies, and NGOs navigating the rebuilding process.
+          </p>
+          <div class="proj-outcome">
+            <p class="proj-outcome-label" data-en="QA Approach" data-fa="رویکرد QA">QA Approach</p>
+            <p class="proj-outcome-text"
+              data-en="Bilingual content validation and language-toggle regression. Accessibility audit for read-aloud and screen reader compatibility. Data integrity verification for all demographic statistics against source documents. Cross-device testing of the interactive map and PDF report."
+              data-fa="اعتبارسنجی محتوای دوزبانه، ممیزی دسترس‌پذیری، تأیید صحت داده‌های آماری و تست چند دستگاهی.">
+              Bilingual content validation and language-toggle regression. Accessibility audit for read-aloud and screen reader compatibility. Data integrity verification for all demographic statistics against source documents. Cross-device testing of the interactive map and PDF report.
+            </p>
+          </div>
+          <div class="proj-bottom">
+            <div class="proj-chips">
+              <span class="proj-chip">Accessibility</span>
+              <span class="proj-chip">i18n Testing</span>
+              <span class="proj-chip">Data Validation</span>
+              <span class="proj-chip">Cross-device</span>
+            </div>
+            <a class="proj-link" href="https://digitaltwinshub2025.github.io/USGBC/" target="_blank" rel="noreferrer">
+              <span data-en="View Project" data-fa="مشاهده">View Project</span>
+              <span class="proj-arrow"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-row reveal">
+        <div class="proj-left">
+          <div>
+            <div class="proj-index">05</div>
+            <h3 class="proj-name" data-en="ASU Reclamation Project" data-fa="پروژه ASU Reclamation">ASU Reclamation Project</h3>
+            <p class="proj-client" data-en="Arizona State University · 2025" data-fa="دانشگاه آریزونا · ۲۰۲۵">Arizona State University · 2025</p>
+          </div>
+          <span class="proj-category" data-en="Digital Twin · XR · Urban Tech" data-fa="دوقلوی دیجیتال · XR">Digital Twin · XR · Urban Tech</span>
+        </div>
+        <div class="proj-right">
+          <div>
+            <p class="proj-role-label" data-en="QA Role" data-fa="نقش QA">QA Role</p>
+            <p class="proj-role-val" data-en="Digital Twin & XR QA Engineer" data-fa="مهندس QA دوقلوی دیجیتال و XR">Digital Twin & XR QA Engineer</p>
+          </div>
+          <p class="proj-desc"
+            data-en="A community-centered project transforming underused urban spaces in Los Angeles into living gardens using 3D modeling, digital twin technology, and extended reality (XR) — built in collaboration with ASU and the California Center for Climate Change Education."
+            data-fa="یک پروژه جامعه‌محور برای تبدیل فضاهای شهری استفاده‌نشده در لس‌آنجلس با استفاده از مدل‌سازی سه‌بعدی و واقعیت گسترده.">
+            A community-centered project transforming underused urban spaces in Los Angeles into living gardens using 3D modeling, digital twin technology, and extended reality (XR) — built in collaboration with ASU and the California Center for Climate Change Education.
+          </p>
+          <div class="proj-outcome">
+            <p class="proj-outcome-label" data-en="QA Approach" data-fa="رویکرد QA">QA Approach</p>
+            <p class="proj-outcome-text"
+              data-en="Validated 3D model rendering accuracy and XR interaction flows across AR/VR devices. Tested community-facing tools for non-technical users — accessibility and error handling. Data pipeline validation for digital twin feeds, ensuring spatial accuracy between physical and digital counterparts."
+              data-fa="اعتبارسنجی دقت رندرینگ مدل سه‌بعدی، تست جریان‌های XR و اعتبارسنجی خط لوله داده برای دوقلوی دیجیتال.">
+              Validated 3D model rendering accuracy and XR interaction flows across AR/VR devices. Tested community-facing tools for non-technical users — accessibility and error handling. Data pipeline validation for digital twin feeds, ensuring spatial accuracy between physical and digital counterparts.
+            </p>
+          </div>
+          <div class="proj-bottom">
+            <div class="proj-chips">
+              <span class="proj-chip">XR / AR Testing</span>
+              <span class="proj-chip">3D Rendering QA</span>
+              <span class="proj-chip">Data Pipeline</span>
+              <span class="proj-chip">Accessibility</span>
+            </div>
+            <a class="proj-link" href="https://sites.google.com/view/asureclamationproject/home" target="_blank" rel="noreferrer">
+              <span data-en="View Project" data-fa="مشاهده">View Project</span>
+              <span class="proj-arrow"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-row reveal">
+        <div class="proj-left">
+          <div>
+            <div class="proj-index">06</div>
+            <h3 class="proj-name" data-en="Baldwin Hills 6-Mile Corridor" data-fa="کریدور شش‌مایلی Baldwin Hills">Baldwin Hills 6-Mile Corridor</h3>
+            <p class="proj-client" data-en="DigitalTwinsHub · 2025" data-fa="DigitalTwinsHub · ۲۰۲۵">DigitalTwinsHub · 2025</p>
+          </div>
+          <span class="proj-category" data-en="Urban Planning · Geospatial" data-fa="برنامه‌ریزی شهری · جغرافیای فضایی">Urban Planning · Geospatial</span>
+        </div>
+        <div class="proj-right">
+          <div>
+            <p class="proj-role-label" data-en="QA Role" data-fa="نقش QA">QA Role</p>
+            <p class="proj-role-val" data-en="Geospatial & Frontend QA Engineer" data-fa="مهندس QA جغرافیای فضایی">Geospatial & Frontend QA Engineer</p>
+          </div>
+          <p class="proj-desc"
+            data-en="An interactive planning platform for the Baldwin Hills 6-Mile Corridor Initiative — a major urban corridor project in Los Angeles focused on mobility, green infrastructure, and community connectivity across one of the city's most significant linear landscapes."
+            data-fa="یک پلتفرم برنامه‌ریزی تعاملی برای ابتکار کریدور شش‌مایلی Baldwin Hills در لس‌آنجلس، با تمرکز بر تحرک، زیرساخت سبز و ارتباط جامعه.">
+            An interactive planning platform for the Baldwin Hills 6-Mile Corridor Initiative — a major urban corridor project in Los Angeles focused on mobility, green infrastructure, and community connectivity across one of the city's most significant linear landscapes.
+          </p>
+          <div class="proj-outcome">
+            <p class="proj-outcome-label" data-en="QA Approach" data-fa="رویکرد QA">QA Approach</p>
+            <p class="proj-outcome-text"
+              data-en="Validated spatial layer accuracy and map rendering consistency across the 6-mile extent. Tested interactive corridor navigation, zone filtering, and overlay toggling. Cross-device and cross-browser regression covering desktop and mobile field use cases."
+              data-fa="اعتبارسنجی دقت لایه‌های فضایی، تست ناوبری تعاملی کریدور و تست چند دستگاهی.">
+              Validated spatial layer accuracy and map rendering consistency across the 6-mile extent. Tested interactive corridor navigation, zone filtering, and overlay toggling. Cross-device and cross-browser regression covering desktop and mobile field use cases.
+            </p>
+          </div>
+          <div class="proj-bottom">
+            <div class="proj-chips">
+              <span class="proj-chip">Geospatial QA</span>
+              <span class="proj-chip">Map Rendering</span>
+              <span class="proj-chip">Cross-browser</span>
+              <span class="proj-chip">Mobile Testing</span>
+            </div>
+            <a class="proj-link" href="https://digitaltwinshub.github.io/Baldwin/" target="_blank" rel="noreferrer">
+              <span data-en="View Project" data-fa="مشاهده">View Project</span>
+              <span class="proj-arrow"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-row reveal">
+        <div class="proj-left">
+          <div>
+            <div class="proj-index">07</div>
+            <h3 class="proj-name" data-en="Pando Populus" data-fa="Pando Populus">Pando Populus</h3>
+            <p class="proj-client" data-en="DigitalTwinsHub · Los Angeles County · 2025" data-fa="DigitalTwinsHub · لس‌آنجلس · ۲۰۲۵">DigitalTwinsHub · Los Angeles County · 2025</p>
+          </div>
+          <span class="proj-category" data-en="Climate Tech · Community Resilience" data-fa="فناوری اقلیمی · تاب‌آوری جامعه">Climate Tech · Community Resilience</span>
+        </div>
+        <div class="proj-right">
+          <div>
+            <p class="proj-role-label" data-en="QA Role" data-fa="نقش QA">QA Role</p>
+            <p class="proj-role-val" data-en="Functional & Data QA Engineer" data-fa="مهندس QA عملکردی و داده">Functional & Data QA Engineer</p>
+          </div>
+          <p class="proj-desc"
+            data-en="A community-scale environmental and social resilience platform that integrates climate risk, demographic analysis, and land-use data to help residents, planners, and decision-makers understand how heat, flooding, wildfire, and air quality intersect with real neighborhood conditions in Census Tract 1397.02, LA County."
+            data-fa="یک پلتفرم تاب‌آوری زیست‌محیطی و اجتماعی در مقیاس جامعه که داده‌های ریسک اقلیمی، تحلیل جمعیتی و داده‌های کاربری اراضی را ادغام می‌کند.">
+            A community-scale environmental and social resilience platform that integrates climate risk, demographic analysis, and land-use data to help residents, planners, and decision-makers understand how heat, flooding, wildfire, and air quality intersect with real neighborhood conditions in Census Tract 1397.02, LA County.
+          </p>
+          <div class="proj-outcome">
+            <p class="proj-outcome-label" data-en="QA Approach" data-fa="رویکرد QA">QA Approach</p>
+            <p class="proj-outcome-text"
+              data-en="Validated all demographic statistics (6,447 residents, 24% elderly, 88.5% homeownership, ~77% protected land) against U.S. Census and public datasets. Tested the interactive Risk Profile Builder tool — all 8 community characteristic toggles, severity bar rendering, and risk score logic. Verified multi-hazard data overlays and responsive layout across devices."
+              data-fa="اعتبارسنجی تمام آمارهای جمعیتی، تست ابزار سازنده پروفایل ریسک، تأیید پوشش‌های داده چند خطری و طرح‌بندی ریسپانسیو.">
+              Validated all demographic statistics (6,447 residents, 24% elderly, 88.5% homeownership, ~77% protected land) against U.S. Census and public datasets. Tested the interactive Risk Profile Builder tool — all 8 community characteristic toggles, severity bar rendering, and risk score logic. Verified multi-hazard data overlays and responsive layout across devices.
+            </p>
+          </div>
+          <div class="proj-bottom">
+            <div class="proj-chips">
+              <span class="proj-chip">Data Validation</span>
+              <span class="proj-chip">Interactive UI Testing</span>
+              <span class="proj-chip">Responsive QA</span>
+              <span class="proj-chip">Multi-hazard Data</span>
+            </div>
+            <a class="proj-link" href="https://digitaltwinshub2025.github.io/Pando/" target="_blank" rel="noreferrer">
+              <span data-en="View Project" data-fa="مشاهده">View Project</span>
+              <span class="proj-arrow"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-row reveal">
+        <div class="proj-left">
+          <div>
+            <div class="proj-index">08</div>
+            <h3 class="proj-name" data-en="PUHC Innovation Alleys" data-fa="کوچه‌های نوآوری PUHC">PUHC Innovation Alleys</h3>
+            <p class="proj-client" data-en="PUHC PUEDE Center · Pico-Union, Los Angeles · 2026" data-fa="مرکز PUHC PUEDE · پیکو-یونیون، لس‌آنجلس · ۲۰۲۶">PUHC PUEDE Center · Pico-Union, LA · 2026</p>
+          </div>
+          <span class="proj-category" data-en="Digital Twin · Urban Infrastructure · Unreal Engine" data-fa="دوقلوی دیجیتال · زیرساخت شهری">Digital Twin · Urban Infrastructure</span>
+        </div>
+        <div class="proj-right">
+          <div>
+            <p class="proj-role-label" data-en="QA Role" data-fa="نقش QA">QA Role</p>
+            <p class="proj-role-val" data-en="Digital Twin & 3D Platform QA Engineer" data-fa="مهندس QA دوقلوی دیجیتال و پلتفرم سه‌بعدی">Digital Twin & 3D Platform QA Engineer</p>
+          </div>
+          <p class="proj-desc"
+            data-en="A spatial planning and digital twin visualization platform for Water Alley — a prototype alley transformation project in Pico-Union, Los Angeles. The platform uses Unreal Engine 5 to simulate three design intervention systems (shade structures, community murals, urban farming) across four distinct alley zones, serving as a replicable model for LA's 900+ miles of underutilized alleys."
+            data-fa="یک پلتفرم برنامه‌ریزی فضایی و تجسم دوقلوی دیجیتال برای تبدیل کوچه در پیکو-یونیون، لس‌آنجلس، با استفاده از Unreal Engine 5.">
+            A spatial planning and digital twin visualization platform for Water Alley — a prototype alley transformation project in Pico-Union, Los Angeles. The platform uses Unreal Engine 5 to simulate three design intervention systems (shade structures, community murals, urban farming) across four distinct alley zones, serving as a replicable model for LA's 900+ miles of underutilized alleys.
+          </p>
+          <div class="proj-outcome">
+            <p class="proj-outcome-label" data-en="QA Approach" data-fa="رویکرد QA">QA Approach</p>
+            <p class="proj-outcome-text"
+              data-en="Validated Unreal Engine 5 digital twin rendering accuracy across all four zone visualizations (Areas A–D). Tested intervention layer toggle logic — shade, murals, and farming combinations — for state consistency and visual fidelity. Verified before/after comparison tool, ArcGIS map integration, and the fence-map overlay. Performed cross-browser and performance testing on the 3D spatial simulation viewer."
+              data-fa="اعتبارسنجی دقت رندرینگ دوقلوی دیجیتال Unreal Engine 5، تست منطق تغییر لایه مداخله و تأیید ابزار مقایسه قبل/بعد.">
+              Validated Unreal Engine 5 digital twin rendering accuracy across all four zone visualizations (Areas A–D). Tested intervention layer toggle logic — shade, murals, and farming combinations — for state consistency and visual fidelity. Verified before/after comparison tool, ArcGIS map integration, and the fence-map overlay. Performed cross-browser and performance testing on the 3D spatial simulation viewer.
+            </p>
+          </div>
+          <div class="proj-bottom">
+            <div class="proj-chips">
+              <span class="proj-chip">Unreal Engine QA</span>
+              <span class="proj-chip">3D Rendering</span>
+              <span class="proj-chip">Layer Toggle Testing</span>
+              <span class="proj-chip">ArcGIS Integration</span>
+              <span class="proj-chip">Performance Testing</span>
+            </div>
+            <a class="proj-link" href="https://digitaltwinshub2025.github.io/PUHC-Innovation-Alleys/" target="_blank" rel="noreferrer">
+              <span data-en="View Project" data-fa="مشاهده">View Project</span>
+              <span class="proj-arrow"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="background:var(--black);">
+  <div class="skills-wrap">
+    <p class="sec-eyebrow reveal" data-en="Tech Stack" data-fa="پشته فناوری">Tech Stack</p>
+    <h2 class="sec-title reveal" data-en="Skills & Expertise" data-fa="مهارت‌ها و تخصص">Skills & Expertise</h2>
+    <div class="sec-rule reveal"></div>
+
+    <div class="skill-tabs reveal" id="skillTabs">
+      <button class="skill-tab active" onclick="switchSkillTab(0)" data-en="Automation" data-fa="اتوماسیون">Automation</button>
+      <button class="skill-tab" onclick="switchSkillTab(1)" data-en="Languages" data-fa="زبان‌ها">Languages</button>
+      <button class="skill-tab" onclick="switchSkillTab(2)" data-en="CI/CD & Cloud" data-fa="CI/CD و کلاد">CI/CD & Cloud</button>
+      <button class="skill-tab" onclick="switchSkillTab(3)" data-en="API & Data" data-fa="API و داده">API & Data</button>
+      <button class="skill-tab" onclick="switchSkillTab(4)" data-en="Test Management" data-fa="مدیریت تست">Test Management</button>
+      <button class="skill-tab" onclick="switchSkillTab(5)" data-en="Spatial & XR" data-fa="فضایی و XR">Spatial & XR</button>
+    </div>
+
+    <div class="skill-panel active" id="skillPanel0">
+      <div class="skill-panel-inner">
+        <div class="skill-panel-aside">
+          <div class="skill-panel-num">01</div>
+          <h3 class="skill-panel-title" data-en="Test Automation" data-fa="اتوماسیون تست">Test Automation</h3>
+          <p class="skill-panel-sub" data-en="Frameworks & Tools" data-fa="فریم‌ورک‌ها و ابزارها">Frameworks & Tools</p>
+        </div>
+        <div>
+          <div class="skill-pills">
+            <div class="skill-pill" data-tier="expert" style="--lvl:95%;--delay:0.0s"><span class="skill-pill-name">Playwright</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="expert" style="--lvl:95%;--delay:0.05s"><span class="skill-pill-name">Selenium WebDriver</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="expert" style="--lvl:90%;--delay:0.1s"><span class="skill-pill-name">SpecFlow / BDD</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:85%;--delay:0.15s"><span class="skill-pill-name">Cypress</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:88%;--delay:0.2s"><span class="skill-pill-name">Cucumber / Gherkin</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:85%;--delay:0.25s"><span class="skill-pill-name">TestNG / JUnit</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:82%;--delay:0.3s"><span class="skill-pill-name">REST Assured / Karate</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:80%;--delay:0.35s"><span class="skill-pill-name">Page Object Model</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:78%;--delay:0.4s"><span class="skill-pill-name">HP UFT / QTP</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:75%;--delay:0.45s"><span class="skill-pill-name">Coded UI / Xamarin</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+          </div>
+          <div class="skill-legend">
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.6),rgba(201,169,97,0.7));"></div><span>Expert</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.4),rgba(201,169,97,0.45));"></div><span>Advanced</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:rgba(201,169,97,0.2);"></div><span>Proficient</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-panel" id="skillPanel1">
+      <div class="skill-panel-inner">
+        <div class="skill-panel-aside">
+          <div class="skill-panel-num">02</div>
+          <h3 class="skill-panel-title" data-en="Languages" data-fa="زبان‌های برنامه‌نویسی">Languages</h3>
+          <p class="skill-panel-sub" data-en="Programming & Scripting" data-fa="برنامه‌نویسی و اسکریپت‌نویسی">Programming & Scripting</p>
+        </div>
+        <div>
+          <div class="skill-pills">
+            <div class="skill-pill" data-tier="expert" style="--lvl:92%;--delay:0.0s"><span class="skill-pill-name">Java</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="expert" style="--lvl:90%;--delay:0.05s"><span class="skill-pill-name">C# / .NET</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="expert" style="--lvl:88%;--delay:0.1s"><span class="skill-pill-name">SQL / PL-SQL</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:85%;--delay:0.15s"><span class="skill-pill-name">TypeScript</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:80%;--delay:0.2s"><span class="skill-pill-name">JavaScript</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:72%;--delay:0.25s"><span class="skill-pill-name">PowerShell</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:70%;--delay:0.3s"><span class="skill-pill-name">XML / HTML</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+          </div>
+          <div class="skill-legend">
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.6),rgba(201,169,97,0.7));"></div><span>Expert</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.4),rgba(201,169,97,0.45));"></div><span>Advanced</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:rgba(201,169,97,0.2);"></div><span>Proficient</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-panel" id="skillPanel2">
+      <div class="skill-panel-inner">
+        <div class="skill-panel-aside">
+          <div class="skill-panel-num">03</div>
+          <h3 class="skill-panel-title" data-en="CI/CD & Cloud" data-fa="CI/CD و کلاد">CI/CD & Cloud</h3>
+          <p class="skill-panel-sub" data-en="Pipelines & DevOps" data-fa="خطوط لوله و DevOps">Pipelines & DevOps</p>
+        </div>
+        <div>
+          <div class="skill-pills">
+            <div class="skill-pill" data-tier="expert" style="--lvl:92%;--delay:0.0s"><span class="skill-pill-name">Jenkins</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="expert" style="--lvl:90%;--delay:0.05s"><span class="skill-pill-name">Git / GitHub</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:85%;--delay:0.1s"><span class="skill-pill-name">Azure DevOps</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:82%;--delay:0.15s"><span class="skill-pill-name">Azure (ARM / VM)</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:80%;--delay:0.2s"><span class="skill-pill-name">Maven</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:78%;--delay:0.25s"><span class="skill-pill-name">Docker</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:72%;--delay:0.3s"><span class="skill-pill-name">AWS (S3 / EC2)</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:70%;--delay:0.35s"><span class="skill-pill-name">Entity Framework</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+          </div>
+          <div class="skill-legend">
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.6),rgba(201,169,97,0.7));"></div><span>Expert</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.4),rgba(201,169,97,0.45));"></div><span>Advanced</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:rgba(201,169,97,0.2);"></div><span>Proficient</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-panel" id="skillPanel3">
+      <div class="skill-panel-inner">
+        <div class="skill-panel-aside">
+          <div class="skill-panel-num">04</div>
+          <h3 class="skill-panel-title" data-en="API & Data Testing" data-fa="تست API و داده">API & Data Testing</h3>
+          <p class="skill-panel-sub" data-en="Backend & Integration" data-fa="بک‌اند و یکپارچه‌سازی">Backend & Integration</p>
+        </div>
+        <div>
+          <div class="skill-pills">
+            <div class="skill-pill" data-tier="expert" style="--lvl:95%;--delay:0.0s"><span class="skill-pill-name">Postman</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="expert" style="--lvl:93%;--delay:0.05s"><span class="skill-pill-name">REST API Testing</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="expert" style="--lvl:88%;--delay:0.1s"><span class="skill-pill-name">Oracle / SQL DB</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:82%;--delay:0.15s"><span class="skill-pill-name">ETL / Data Validation</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:80%;--delay:0.2s"><span class="skill-pill-name">Microservices Testing</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:80%;--delay:0.25s"><span class="skill-pill-name">SOAP UI</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:74%;--delay:0.3s"><span class="skill-pill-name">GraphQL Testing</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+          </div>
+          <div class="skill-legend">
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.6),rgba(201,169,97,0.7));"></div><span>Expert</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.4),rgba(201,169,97,0.45));"></div><span>Advanced</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:rgba(201,169,97,0.2);"></div><span>Proficient</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-panel" id="skillPanel4">
+      <div class="skill-panel-inner">
+        <div class="skill-panel-aside">
+          <div class="skill-panel-num">05</div>
+          <h3 class="skill-panel-title" data-en="Test Management" data-fa="مدیریت تست">Test Management</h3>
+          <p class="skill-panel-sub" data-en="Planning & Process" data-fa="برنامه‌ریزی و فرایند">Planning & Process</p>
+        </div>
+        <div>
+          <div class="skill-pills">
+            <div class="skill-pill" data-tier="expert" style="--lvl:95%;--delay:0.0s"><span class="skill-pill-name">Test Strategy & Planning</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="expert" style="--lvl:95%;--delay:0.05s"><span class="skill-pill-name">Regression / Smoke Testing</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="expert" style="--lvl:92%;--delay:0.1s"><span class="skill-pill-name">Jira / Zephyr</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="expert" style="--lvl:92%;--delay:0.15s"><span class="skill-pill-name">Agile / Scrum</span><span class="skill-pill-level" data-en="Expert" data-fa="خبره">Expert</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:85%;--delay:0.2s"><span class="skill-pill-name">HP ALM / QC</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:83%;--delay:0.25s"><span class="skill-pill-name">STLC / Bug Life Cycle</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:82%;--delay:0.3s"><span class="skill-pill-name">UAT / Integration Testing</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:80%;--delay:0.35s"><span class="skill-pill-name">Cross-browser Testing</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+          </div>
+          <div class="skill-legend">
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.6),rgba(201,169,97,0.7));"></div><span>Expert</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.4),rgba(201,169,97,0.45));"></div><span>Advanced</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:rgba(201,169,97,0.2);"></div><span>Proficient</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-panel" id="skillPanel5">
+      <div class="skill-panel-inner">
+        <div class="skill-panel-aside">
+          <div class="skill-panel-num">06</div>
+          <h3 class="skill-panel-title" data-en="Spatial & XR QA" data-fa="QA فضایی و XR">Spatial & XR QA</h3>
+          <p class="skill-panel-sub" data-en="Emerging Technologies" data-fa="فناوری‌های نوظهور">Emerging Technologies</p>
+        </div>
+        <div>
+          <div class="skill-pills">
+            <div class="skill-pill" data-tier="advanced" style="--lvl:88%;--delay:0.0s"><span class="skill-pill-name">Digital Twin QA</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:85%;--delay:0.05s"><span class="skill-pill-name">Geospatial QA</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="advanced" style="--lvl:82%;--delay:0.1s"><span class="skill-pill-name">Accessibility (WCAG)</span><span class="skill-pill-level" data-en="Advanced" data-fa="پیشرفته">Advanced</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:78%;--delay:0.15s"><span class="skill-pill-name">XR / AR Validation</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:75%;--delay:0.2s"><span class="skill-pill-name">Unreal Engine 5 Testing</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:72%;--delay:0.25s"><span class="skill-pill-name">ArcGIS Integration Testing</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+            <div class="skill-pill" data-tier="proficient" style="--lvl:70%;--delay:0.3s"><span class="skill-pill-name">3D Rendering Validation</span><span class="skill-pill-level" data-en="Proficient" data-fa="ماهر">Proficient</span></div>
+          </div>
+          <div class="skill-legend">
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.6),rgba(201,169,97,0.7));"></div><span>Expert</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:linear-gradient(to right,rgba(139,0,0,0.4),rgba(201,169,97,0.45));"></div><span>Advanced</span></div>
+            <div class="skill-legend-item"><div class="skill-legend-line" style="background:rgba(201,169,97,0.2);"></div><span>Proficient</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="background:var(--black);">
+  <div class="collection">
+    <p class="sec-eyebrow reveal" data-en="Contact" data-fa="تماس">Contact</p>
+    <h2 class="sec-title reveal" data-en="Let's Connect" data-fa="در ارتباط باشیم">Let's Connect</h2>
+    <div class="sec-rule reveal"></div>
+
+    <div class="cards-grid">
+      <div class="card reveal">
+        <span class="card-glyph">📍</span>
+        <h3 class="card-name" data-en="Location" data-fa="موقعیت">Location</h3>
+        <p class="card-desc" data-en="Los Angeles, California, United States" data-fa="لس‌آنجلس، کالیفرنیا، ایالات متحده">Los Angeles, California, United States</p>
+      </div>
+
+      <div class="card reveal">
+        <span class="card-glyph">✉</span>
+        <h3 class="card-name" data-en="Email" data-fa="ایمیل">Email</h3>
+        <p class="card-desc"><a href="mailto:aomid6362@gmail.com">aomid6362@gmail.com</a></p>
+      </div>
+
+      <div class="card reveal">
+        <span class="card-glyph">☎</span>
+        <h3 class="card-name" data-en="Phone" data-fa="تلفن">Phone</h3>
+        <p class="card-desc"><a href="tel:+18189846362">(818) 984-6362</a></p>
+      </div>
+
+      <div class="card reveal">
+        <span class="card-glyph">🔗</span>
+        <h3 class="card-name" data-en="Links" data-fa="لینک‌ها">Links</h3>
+        <p class="card-desc">
+          <a href="https://www.linkedin.com/in/ahmadiomid92" target="_blank" rel="noreferrer">LinkedIn</a><br>
+          <a href="https://github.com/siromidahmadi" target="_blank" rel="noreferrer">GitHub</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="reveal">
+  <div class="footer-logo" data-en="OMID AHMADI" data-fa="امید احمدی">OMID AHMADI</div>
+  <div class="footer-rule"></div>
+  <ul class="footer-nav">
+    <li><a href="#story"      data-en="About"      data-fa="درباره">About</a></li>
+    <li><a href="#collection" data-en="Experience" data-fa="تجربه">Experience</a></li>
+    <li><a href="#projects" data-en="Projects" data-fa="پروژه‌ها">Projects</a></li>
+    <li><a href="#skills" data-en="Skills" data-fa="مهارت‌ها">Skills</a></li>
+    <li><a href="#contact"    data-en="Contact"    data-fa="تماس">Contact</a></li>
+  </ul>
+  <div class="nav-cv" style="margin-left:0;">
+    <a class="cv-link" href="Assest/Omid-Ahmadi-Resume.pdf" download data-en="Resume (PDF)" data-fa="رزومه (PDF)">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 3v10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M8.5 10.5 12 13.9l3.5-3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5 16.5c0 1.4 1.1 2.5 2.5 2.5h9c1.4 0 2.5-1.1 2.5-2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      Resume (PDF)
+    </a>
+    <a class="cv-link" href="Assest/Omid-Ahmadi-Resume.docx" download data-en="Resume (Word)" data-fa="رزومه (Word)">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 3v10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M8.5 10.5 12 13.9l3.5-3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5 16.5c0 1.4 1.1 2.5 2.5 2.5h9c1.4 0 2.5-1.1 2.5-2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      Resume (Word)
+    </a>
+  </div>
+  <div class="footer-social">
+    <a class="soc" href="https://www.linkedin.com/in/ahmadiomid92" target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a>
+    <a class="soc" href="https://github.com/siromidahmadi" target="_blank" rel="noreferrer" aria-label="GitHub">gh</a>
+  </div>
+  <button class="tiny-btn" id="verifyInfoBtn" type="button">Info</button>
+  <p class="footer-copy">© 2026 Omid Ahmadi — Los Angeles, California</p>
+</footer>
+
+<div class="modal" id="cardModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true">
+    <button class="modal-close" id="cardModalClose" type="button" aria-label="Close">×</button>
+    <div id="cardModalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ── CURSOR ── */
+const cursor = document.getElementById('cursor');
+let mx = -200, my = -200, cx = -200, cy = -200;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+document.querySelectorAll('a, button, .card, .ov-cta').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+(function tick() {
+  cx += (mx - cx) * 0.18;
+  cy += (my - cy) * 0.18;
+  cursor.style.left = cx + 'px';
+  cursor.style.top  = cy + 'px';
+  requestAnimationFrame(tick);
+})();
+
+/* ── NAVBAR ── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ── HERO OVERLAY SEQUENCE ──
+   The hero is 500vh. As user scrolls
+   through it, overlays cross-fade.
+   The photo always stays visible in the
+   background; it simply fades slightly
+   on later slides so text is readable.
+   Once the hero exits the viewport
+   entirely the photo is gone naturally. */
+const overlays    = ['ov0','ov1','ov2','ov3'].map(id => document.getElementById(id));
+const breakpoints = [0, 0.20, 0.45, 0.70];
+const photoWrap   = document.getElementById('photoWrap');
+
+function getActive(progress) {
+  let active = 0;
+  for (let i = 1; i < breakpoints.length; i++) {
+    if (progress >= breakpoints[i]) active = i;
+  }
+  return active;
+}
+
+window.addEventListener('scroll', () => {
+  const hero  = document.getElementById('hero');
+  const top   = hero.getBoundingClientRect().top;
+  const range = hero.offsetHeight - window.innerHeight;
+  const scroll = Math.max(0, Math.min(1, -top / range));
+
+  const active = getActive(scroll);
+
+  overlays.forEach((el, i) => {
+    el.classList.remove('visible','hidden-above','hidden-below');
+    if (i === active)    el.classList.add('visible');
+    else if (i < active) el.classList.add('hidden-above');
+    else                 el.classList.add('hidden-below');
+  });
+
+  /* Dim photo gently on later slides so text is readable,
+     but keep it always visible while we're still in the hero.
+     At slide 2+ fade to 0.35 opacity; slide 3 fade to 0.15. */
+  const photoOpacity = active === 0 ? 1
+                     : active === 1 ? 0.65
+                     : active === 2 ? 0.35
+                     : 0.15;
+  photoWrap.style.opacity = photoOpacity;
+
+}, { passive: true });
+
+/* ── PARTICLES ── */
+const pLayer = document.getElementById('particles');
+const colors = [
+  'rgba(201,169,97,0.7)',
+  'rgba(139,0,0,0.85)',
+  'rgba(201,169,97,0.4)',
+  'rgba(80,0,0,0.7)',
+];
+function spawnParticle() {
+  if (!pLayer) return;
+  const dot  = document.createElement('div');
+  dot.className = 'p-dot';
+  const size  = 2 + Math.random() * 3;
+  const x     = 10 + Math.random() * 80;
+  const bot   = 15 + Math.random() * 50;
+  const dur   = 3.5 + Math.random() * 4;
+  const delay = Math.random() * 1.5;
+  const dx    = (Math.random() - 0.5) * 80;
+  const col   = colors[Math.floor(Math.random() * colors.length)];
+  dot.style.cssText = `
+    width:${size}px;height:${size}px;
+    left:${x}%;bottom:${bot}%;
+    background:${col};--dx:${dx}px;
+    animation-duration:${dur}s;animation-delay:${delay}s;`;
+  pLayer.appendChild(dot);
+  setTimeout(() => dot.remove(), (dur + delay) * 1000 + 200);
+}
+setInterval(spawnParticle, 250);
+
+/* ── REVEAL ON SCROLL (content below hero) ──
+   Uses IntersectionObserver so elements fade-in
+   as they enter the viewport after the hero ends. */
+const revealEls = document.querySelectorAll('.reveal');
+const observer  = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+/* ── LANGUAGE TOGGLE ── */
+let currentLang = 'en';
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btn-en').className = 'lang-btn ' + (lang === 'en' ? 'active' : 'inactive');
+  document.getElementById('btn-fa').className = 'lang-btn ' + (lang === 'fa' ? 'active' : 'inactive');
+  applyLangToRoot(document, lang, 'preview');
+  const modalEl = document.getElementById('cardModal');
+  if (modalEl && modalEl.classList.contains('open')) {
+    const modalBodyEl = document.getElementById('cardModalBody');
+    if (modalBodyEl) applyLangToRoot(modalBodyEl, lang, 'full');
+  }
+  if (lang === 'fa') {
+    document.documentElement.lang = 'fa';
+    document.documentElement.dir  = 'rtl';
+    document.body.style.fontFamily = "'Vazirmatn', sans-serif";
+  } else {
+    document.documentElement.lang = 'en';
+    document.documentElement.dir  = 'ltr';
+    document.body.style.fontFamily = "'Inter', sans-serif";
+  }
+}
+
+function applyLangToRoot(root, lang, mode) {
+  root.querySelectorAll('[data-en][data-fa]').forEach(el => {
+    const wantPreview = mode === 'preview';
+
+    const previewAttr = 'data-' + lang + '-preview';
+    const fullAttr = 'data-' + lang;
+
+    if (wantPreview && el.hasAttribute(previewAttr)) {
+      el.innerHTML = el.getAttribute(previewAttr);
+      return;
+    }
+
+    el.innerHTML = el.getAttribute(fullAttr);
+  });
+}
+
+setLang(currentLang);
+
+const cardModal = document.getElementById('cardModal');
+const cardModalBody = document.getElementById('cardModalBody');
+const cardModalClose = document.getElementById('cardModalClose');
+
+function openCardModal(card) {
+  cardModalBody.innerHTML = '';
+  const clone = card.cloneNode(true);
+  clone.classList.remove('reveal', 'revealed');
+  applyLangToRoot(clone, currentLang, 'full');
+  cardModalBody.appendChild(clone);
+  cardModal.classList.add('open');
+  cardModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeCardModal() {
+  cardModal.classList.remove('open');
+  cardModal.setAttribute('aria-hidden', 'true');
+  cardModalBody.innerHTML = '';
+}
+
+const verifyInfoBtn = document.getElementById('verifyInfoBtn');
+if (verifyInfoBtn) {
+  verifyInfoBtn.addEventListener('click', () => {
+    const a = 2 + Math.floor(Math.random() * 8);
+    const b = 2 + Math.floor(Math.random() * 8);
+    const ans = window.prompt(`What is ${a} × ${b}?`);
+    if (ans === null) return;
+    const n = Number(String(ans).trim());
+    if (!Number.isFinite(n) || n !== a * b) {
+      window.alert('Incorrect answer.');
+      return;
+    }
+    cardModalBody.innerHTML = `
+      <div class="card">
+        <span class="card-glyph">ID</span>
+        <h3 class="card-name">OMID AHMADI</h3>
+        <p class="card-origin">Quick Details</p>
+        <p class="card-desc">
+          Full Name: OMID AHMADI<br>
+          PHONE # +1 818 984 6362<br>
+          EMAIL: Aomid6362@gmail.com<br>
+          ZIP CODE: 90001<br>
+          ADDRESS: LOS ANGELES, CA<br>
+          NO SPONSERSHIP NEEDS<br>
+          US CITIZEN
+        </p>
+      </div>
+    `;
+    cardModal.classList.add('open');
+    cardModal.setAttribute('aria-hidden', 'false');
+  });
+}
+
+document.querySelectorAll('#collection .cards-grid .card').forEach(card => {
+  card.classList.add('is-expandable');
+  card.addEventListener('click', () => openCardModal(card));
+});
+
+cardModalClose.addEventListener('click', closeCardModal);
+cardModal.addEventListener('click', (e) => {
+  if (e.target === cardModal) closeCardModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && cardModal.classList.contains('open')) closeCardModal();
+});
+
+function switchSkillTab(index) {
+  document.querySelectorAll('.skill-tab').forEach((tab, i) => {
+    tab.classList.toggle('active', i === index);
+  });
+  document.querySelectorAll('.skill-panel').forEach((panel, i) => {
+    panel.classList.toggle('active', i === index);
+  });
+  setTimeout(() => {
+    const panel = document.getElementById('skillPanel' + index);
+    if (!panel) return;
+    panel.querySelectorAll('.skill-pill').forEach(pill => pill.classList.add('animated'));
+  }, 60);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelectorAll('#skillPanel0 .skill-pill').forEach(pill => pill.classList.add('animated'));
+  }, 400);
+});
+
+const projHidden = document.getElementById('proj-hidden');
+const projBtn = document.getElementById('proj-more-btn');
+const projIcon = document.getElementById('proj-more-icon');
+const projLabel = document.getElementById('proj-more-label');
+if (projBtn && projHidden) {
+  projBtn.addEventListener('click', () => {
+    const currentMaxHeight = projHidden.style.maxHeight;
+    const isOpen = Boolean(currentMaxHeight) && currentMaxHeight !== '0px' && currentMaxHeight !== '0';
+    if (isOpen) {
+      projHidden.style.maxHeight = '0';
+      if (projIcon) projIcon.style.transform = 'rotate(0deg)';
+      if (projLabel) {
+        projLabel.setAttribute('data-en', 'See 5 More Projects');
+        projLabel.setAttribute('data-fa', '۵ پروژه دیگر');
+        projLabel.textContent = (currentLang === 'fa') ? '۵ پروژه دیگر' : 'See 5 More Projects';
+      }
+      document.getElementById('proj-more-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      projHidden.style.maxHeight = projHidden.scrollHeight + 'px';
+      if (projIcon) projIcon.style.transform = 'rotate(45deg)';
+      if (projLabel) {
+        projLabel.setAttribute('data-en', 'Show Less');
+        projLabel.setAttribute('data-fa', 'بستن');
+        projLabel.textContent = (currentLang === 'fa') ? 'بستن' : 'Show Less';
+      }
+      setTimeout(() => {
+        projHidden.querySelectorAll('.reveal').forEach(el => el.classList.add('revealed'));
+      }, 100);
+    }
+  });
+}
+</script>
+</body>
+</html>
