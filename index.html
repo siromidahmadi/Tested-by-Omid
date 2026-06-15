@@ -181,6 +181,23 @@ nav.scrolled {
   overflow: hidden;
 }
 
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1);
+  z-index: 0;
+}
+
+.hero-video.active {
+  opacity: 0.55;
+}
+
+
 /* The photo — fades out as user scrolls through hero */
 .photo-wrap {
   display: flex;
@@ -1156,6 +1173,24 @@ footer .nav-cv .cv-link {
     <!-- ── PHOTO + BACKGROUND (hero only) ── -->
     <div class="hero-bg">
       <div class="vid-placeholder">
+        <!-- VIDEO 1: coding -->
+        <video
+          id="heroCodingVid"
+          class="hero-video active"
+          src="Assest/coding.mp4"
+          autoplay muted loop playsinline
+          preload="auto"
+        ></video>
+
+        <!-- VIDEO 2: ambient -->
+        <video
+          id="heroAmbientVid"
+          class="hero-video"
+          src="Assest/lights.mp4"
+          autoplay muted loop playsinline
+          preload="auto"
+        ></video>
+
         <div class="crimson-haze"></div>
         <div class="particles-layer" id="particles"></div>
 
@@ -2098,6 +2133,8 @@ window.addEventListener('scroll', () => {
 const overlays    = ['ov0','ov1','ov2','ov3'].map(id => document.getElementById(id));
 const breakpoints = [0, 0.20, 0.45, 0.70];
 const photoWrap   = document.getElementById('photoWrap');
+const heroCodingVid = document.getElementById('heroCodingVid');
+const heroAmbientVid = document.getElementById('heroAmbientVid');
 
 function getActive(progress) {
   let active = 0;
@@ -2114,6 +2151,20 @@ window.addEventListener('scroll', () => {
   const scroll = Math.max(0, Math.min(1, -top / range));
 
   const active = getActive(scroll);
+
+  if (heroCodingVid && heroAmbientVid) {
+    const useAmbient = active >= 2;
+    heroCodingVid.classList.toggle('active', !useAmbient);
+    heroAmbientVid.classList.toggle('active', useAmbient);
+
+    const playTarget = useAmbient ? heroAmbientVid : heroCodingVid;
+    const pauseTarget = useAmbient ? heroCodingVid : heroAmbientVid;
+    if (pauseTarget && !pauseTarget.paused) pauseTarget.pause();
+    if (playTarget && playTarget.paused) {
+      const p = playTarget.play();
+      if (p && typeof p.catch === 'function') p.catch(() => {});
+    }
+  }
 
   overlays.forEach((el, i) => {
     el.classList.remove('visible','hidden-above','hidden-below');
