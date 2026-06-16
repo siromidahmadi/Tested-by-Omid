@@ -673,7 +673,9 @@ footer {
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  background: var(--black);
+  position: relative;
+  z-index: 10;
+  isolation: isolate;
 }
 .tiny-btn {
   border: 0.5px solid rgba(201,169,97,0.25);
@@ -716,8 +718,7 @@ footer {
   text-decoration: none;
   transition: color 0.3s;
 }
-.footer-nav a:hover { color: var(--gold);
- }
+.footer-nav a:hover { color: var(--gold); }
 .footer-social {
   display: flex; gap: 1rem;
   position: relative;
@@ -1360,7 +1361,7 @@ footer .nav-cv .cv-link {
       </div>
 
       <div class="card reveal">
-        <span class="card-glyph">CI</span>
+        <span class="card-glyph">Cigna Insurance</span>
         <h3 class="card-name" data-en="QA Automation Engineer" data-fa="مهندس اتوماسیون QA">QA Automation Engineer</h3>
         <p class="card-origin" data-en="Cigna Insurance Services · Contract · Mar 2018 — Dec 2020" data-fa="Cigna · قراردادی · ۲۰۱۸ تا ۲۰۲۰">Cigna Insurance Services · Contract · Mar 2018 — Dec 2020</p>
         <p class="card-desc"
