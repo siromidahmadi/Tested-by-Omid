@@ -716,9 +716,13 @@ footer {
   text-decoration: none;
   transition: color 0.3s;
 }
-.footer-nav a:hover { color: var(--gold); }
+.footer-nav a:hover { color: var(--gold);
+ }
 .footer-social {
   display: flex; gap: 1rem;
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
 }
 .soc {
   width: 36px; height: 36px;
@@ -729,7 +733,8 @@ footer {
   font-size: 0.65rem;
   letter-spacing: 0.05em;
   transition: border-color 0.3s, color 0.3s;
-  cursor: none;
+  cursor: pointer;
+  pointer-events: auto;
 }
 .soc:hover { border-color: var(--gold); color: var(--gold); }
 .footer-copy {
@@ -1336,7 +1341,7 @@ footer .nav-cv .cv-link {
       </div>
 
       <div class="card reveal">
-        <span class="card-glyph">UB</span>
+        <span class="card-glyph">Universal Bank</span>
         <h3 class="card-name" data-en="Test Automation Engineer" data-fa="مهندس اتوماسیون تست">Test Automation Engineer</h3>
         <p class="card-origin" data-en="Universal Bank · Contract · Jan 2021 — Feb 2023" data-fa="Universal Bank · قراردادی · ۲۰۲۱ تا ۲۰۲۳">Universal Bank · Contract · Jan 2021 — Feb 2023</p>
         <p class="card-desc"
@@ -1374,7 +1379,7 @@ footer .nav-cv .cv-link {
       </div>
 
       <div class="card reveal">
-        <span class="card-glyph">SF</span>
+        <span class="card-glyph">State Farm </span>
         <h3 class="card-name" data-en="QA Analyst (Manual Tester)" data-fa="تحلیل‌گر QA (تست دستی)">QA Analyst (Manual Tester)</h3>
         <p class="card-origin" data-en="State Farm · Contract · Jan 2016 — Feb 2018 · 2 yrs 2 mos" data-fa="State Farm · قراردادی · ۲۰۱۶ تا ۲۰۱۸ · ۲ سال و ۲ ماه">State Farm · Contract · Jan 2016 — Feb 2018 · 2 yrs 2 mos</p>
         <p class="card-desc"
@@ -1400,7 +1405,7 @@ footer .nav-cv .cv-link {
     <div class="cards-grid">
       <div class="card reveal">
         <img class="role-logo" src="Assest/LA Tech.png" alt="LA-Tech.org" onerror="this.style.display='none'">
-        <span class="card-glyph">LT</span>
+        <span class="card-glyph">LA-Tech</span>
         <h3 class="card-name" data-en="Mentor" data-fa="منتور">Mentor</h3>
         <p class="card-origin" data-en="LA-Tech.org · Apr 2026 — Present" data-fa="LA-Tech.org · ۲۰۲۶ تا اکنون">LA-Tech.org · Apr 2026 — Present</p>
         <p class="card-desc"
