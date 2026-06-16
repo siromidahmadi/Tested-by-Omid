@@ -11,10 +11,10 @@
 
 :root {
   --black: #000000;
-  --crimson: #8B0000;
-  --crimson-dark: #4A0000;
-  --gold: #C9A961;
-  --gold-light: #D4B87A;
+  --crimson: #E63946;
+  --crimson-dark: #E63946;
+  --gold: #FFD700;
+  --gold-light: #FFE066;
   --cream: #F5F1E8;
   --cream-dim: rgba(245,241,232,0.65);
   --cream-faint: rgba(245,241,232,0.35);
@@ -23,7 +23,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--black);
+  background: #000;
   color: var(--cream);
   font-family: 'Inter', sans-serif;
   font-weight: 300;
@@ -173,7 +173,7 @@ nav.scrolled {
 /* Dark cinematic background */
 .vid-placeholder {
   width: 100%; height: 100%;
-  background: radial-gradient(ellipse at 50% 60%, #1a0000 0%, #0d0000 40%, #000 100%);
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -194,21 +194,35 @@ nav.scrolled {
 }
 
 .hero-video.active {
-  opacity: 0.55;
+  opacity: 1;
 }
 
+
+/* Subtle dark veil so overlays stay legible over bright video */
+.vid-placeholder::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.42);
+  z-index: 2;
+  pointer-events: none;
+}
 
 /* The photo — fades out as user scrolls through hero */
 .photo-wrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  /* JS controls scale & opacity — starts invisible at scale(0) dead center */
+  transform: translateX(-50%) translateY(-50%) scale(0);
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  z-index: 2;
-  transition: opacity 0.1s linear;
-  /* JS controls opacity via .fading-out class + inline style */
+  gap: 1.2rem;
+  z-index: 6;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
 }
-
 .profile-photo {
   width: min(290px, 52vw);
   aspect-ratio: 1 / 1;
@@ -222,6 +236,15 @@ nav.scrolled {
   filter: saturate(1.05) contrast(1.05);
   animation: float-bag 5s ease-in-out infinite alternate;
 }
+.photo-location {
+  font-size: 0.58rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: rgba(255,215,0,0.9);
+  text-shadow: 0 0 20px rgba(0,0,0,0.95), 0 0 8px rgba(0,0,0,0.8);
+  white-space: nowrap;
+}
+
 
 @keyframes float-bag {
   from { transform: translateY(-10px) rotate(-0.8deg); }
@@ -251,6 +274,12 @@ nav.scrolled {
   white-space: nowrap;
   z-index: 4;
 }
+.hero-location.beside-photo {
+  bottom: 1.1rem;
+  opacity: 0.55;
+  transform: translateX(-50%) scale(0.9);
+}
+
 
 /* Particles */
 .particles-layer {
@@ -1200,6 +1229,7 @@ footer .nav-cv .cv-link {
                src="Assest/Omid-Ahmadi.jpeg"
                alt="Omid Ahmadi"
                onerror="this.src='https://placehold.co/280x280/1a0000/c9a961?text=OA'">
+          <p class="photo-location" data-en="Los Angeles, California" data-fa="لس‌آنجلس، کالیفرنیا">Los Angeles, California</p>
         </div>
 
         <div class="hero-location" data-en="Software Development Engineer in Test" data-fa="لس‌آنجلس، کالیفرنیا · مهندس توسعه نرم‌افزار در تست">
@@ -2131,7 +2161,7 @@ window.addEventListener('scroll', () => {
    Once the hero exits the viewport
    entirely the photo is gone naturally. */
 const overlays    = ['ov0','ov1','ov2','ov3'].map(id => document.getElementById(id));
-const breakpoints = [0, 0.20, 0.45, 0.70];
+const breakpoints = [0, 0.18, 0.40, 0.62];
 const photoWrap   = document.getElementById('photoWrap');
 const heroCodingVid = document.getElementById('heroCodingVid');
 const heroAmbientVid = document.getElementById('heroAmbientVid');
@@ -2152,20 +2182,6 @@ window.addEventListener('scroll', () => {
 
   const active = getActive(scroll);
 
-  if (heroCodingVid && heroAmbientVid) {
-    const useAmbient = active >= 2;
-    heroCodingVid.classList.toggle('active', !useAmbient);
-    heroAmbientVid.classList.toggle('active', useAmbient);
-
-    const playTarget = useAmbient ? heroAmbientVid : heroCodingVid;
-    const pauseTarget = useAmbient ? heroCodingVid : heroAmbientVid;
-    if (pauseTarget && !pauseTarget.paused) pauseTarget.pause();
-    if (playTarget && playTarget.paused) {
-      const p = playTarget.play();
-      if (p && typeof p.catch === 'function') p.catch(() => {});
-    }
-  }
-
   overlays.forEach((el, i) => {
     el.classList.remove('visible','hidden-above','hidden-below');
     if (i === active)    el.classList.add('visible');
@@ -2173,14 +2189,59 @@ window.addEventListener('scroll', () => {
     else                 el.classList.add('hidden-below');
   });
 
-  /* Dim photo gently on later slides so text is readable,
-     but keep it always visible while we're still in the hero.
-     At slide 2+ fade to 0.35 opacity; slide 3 fade to 0.15. */
-  const photoOpacity = active === 0 ? 1
-                     : active === 1 ? 0.65
-                     : active === 2 ? 0.35
-                     : 0.15;
-  photoWrap.style.opacity = photoOpacity;
+  const codingVid  = document.getElementById('heroCodingVid');
+  const ambientVid = document.getElementById('heroAmbientVid');
+  if (codingVid && ambientVid) {
+    if (active <= 1) {
+      if (!codingVid.classList.contains('active')) {
+        codingVid.classList.add('active');
+        ambientVid.classList.remove('active');
+        codingVid.play().catch(() => {});
+      }
+    } else {
+      if (!ambientVid.classList.contains('active')) {
+        ambientVid.classList.add('active');
+        codingVid.classList.remove('active');
+        ambientVid.play().catch(() => {});
+      }
+    }
+  }
+
+  const photoStart = 0.82;
+  const photoFull  = 0.99;
+  const heroLocationEl = document.querySelector('.hero-location');
+  const ov3El = document.getElementById('ov3');
+
+  if (scroll < photoStart) {
+    photoWrap.style.opacity   = '0';
+    photoWrap.style.transform = 'translateX(-50%) translateY(-50%) scale(0.05)';
+    photoWrap.style.pointerEvents = 'none';
+    const img = photoWrap.querySelector('.profile-photo');
+    if (img) img.style.animation = 'none';
+    if (heroLocationEl) heroLocationEl.classList.remove('beside-photo');
+    if (ov3El && active == 3) ov3El.style.opacity = '1';
+  } else {
+    const t = Math.min(1, (scroll - photoStart) / (photoFull - photoStart));
+    const eased  = 1 - Math.pow(1 - t, 4);
+    const scale  = 0.05 + eased * 0.95;
+    const opacity = Math.min(1, t * 2.2);
+    photoWrap.style.opacity   = opacity.toFixed(3);
+    photoWrap.style.transform = `translateX(-50%) translateY(-50%) scale(${scale.toFixed(4)})`;
+    photoWrap.style.pointerEvents = eased >= 0.95 ? 'auto' : 'none';
+    if (heroLocationEl) {
+      if (eased >= 0.5) heroLocationEl.classList.add('beside-photo');
+      else heroLocationEl.classList.remove('beside-photo');
+    }
+    const img = photoWrap.querySelector('.profile-photo');
+    if (img && eased >= 0.98) {
+      img.style.animation = 'float-bag 5s ease-in-out infinite alternate';
+    }
+    if (ov3El && active == 3) {
+      const fadeT = Math.max(0, Math.min(1, (eased - 0.9) / 0.1));
+      ov3El.style.opacity = (1 - fadeT).toFixed(3);
+      ov3El.style.pointerEvents = fadeT > 0.5 ? 'none' : 'auto';
+    }
+  }
 
 }, { passive: true });
 
