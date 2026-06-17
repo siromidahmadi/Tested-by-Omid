@@ -2221,6 +2221,11 @@ window.addEventListener('scroll', () => {
   const heroLocationEl = document.querySelector('.hero-location');
   const ov3El = document.getElementById('ov3');
 
+  if (ov3El && active !== 3) {
+    ov3El.style.opacity = '';
+    ov3El.style.pointerEvents = '';
+  }
+
   if (scroll < photoStart) {
     photoWrap.style.opacity   = '0';
     photoWrap.style.transform = 'translateX(-50%) translateY(-50%) scale(0.05)';
