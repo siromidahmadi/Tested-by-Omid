@@ -544,41 +544,185 @@ nav.scrolled {
 
 .card.is-expandable { cursor: pointer; }
 
-#collection .card {
+#collection .selected-roles-grid {
+  grid-auto-rows: 1fr;
+}
+
+#collection .selected-roles-grid .card {
   padding: 0;
   border: none;
   background: transparent;
 }
-#collection .card::before { display: none; }
-#collection .card:hover { transform: none; }
+#collection .selected-roles-grid .card::before { display: none; }
+#collection .selected-roles-grid .card:hover { transform: none; }
 
-#collection .glass-wrap {
+#collection .selected-roles-grid .glass-wrap {
   position: relative;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(139,0,0,0.35), transparent 60%),
-    radial-gradient(circle at 80% 80%, rgba(201,169,97,0.25), transparent 55%),
-    #050505;
-  padding: 2.25rem 1.85rem 1.85rem;
   border-radius: 14px;
   overflow: hidden;
+  cursor: pointer;
+  height: 100%;
+  background:
+    radial-gradient(circle at 25% 15%, rgba(139,0,0,0.45), transparent 58%),
+    radial-gradient(circle at 80% 85%, rgba(201,169,97,0.22), transparent 52%),
+    #060404;
 }
-#collection .card-glass {
+
+#collection .selected-roles-grid .card-glass {
   position: relative;
-  padding: 2.25rem 1.85rem 1.85rem;
-  margin: -2.25rem -1.85rem -1.85rem;
-  background: rgba(255,255,255,0.045);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border: 1px solid rgba(255,255,255,0.12);
+  height: 100%;
+  padding: 2rem 1.75rem 1.6rem;
+  background: rgba(255,255,255,0.042);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.11);
   border-radius: 14px;
-  box-shadow:
-    0 8px 32px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.15);
-  transition: transform .4s, box-shadow .4s;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.45s ease;
 }
-#collection .card-glass:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 14px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.22);
+#collection .selected-roles-grid .card-glass:hover {
+  box-shadow: 0 16px 48px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+#collection .selected-roles-grid .card-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.35), transparent);
+  border-radius: 999px;
+}
+
+#collection .selected-roles-grid .card-header {
+  flex-shrink: 0;
+}
+
+#collection .selected-roles-grid .card-glyph {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  display: block;
+  line-height: 1;
+}
+
+#collection .selected-roles-grid .card-name {
+  font-size: 1.28rem;
+  font-weight: 400;
+  margin-bottom: 0.28rem;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+}
+
+#collection .selected-roles-grid .card-origin {
+  font-size: 0.52rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #C9A961;
+  margin-bottom: 0.9rem;
+}
+
+#collection .selected-roles-grid .card-body {
+  position: relative;
+  flex: 1;
+  max-height: 52px;
+  overflow: hidden;
+  transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1);
+}
+#collection .selected-roles-grid .glass-wrap:hover .card-body {
+  max-height: 300px;
+}
+
+#collection .selected-roles-grid .card-body::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 38px;
+  background: linear-gradient(to bottom, transparent, rgba(8,2,2,0.94));
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+#collection .selected-roles-grid .glass-wrap:hover .card-body::after {
+  opacity: 0;
+}
+
+#collection .selected-roles-grid .card-desc {
+  font-size: 0.74rem;
+  line-height: 1.75;
+  color: rgba(245,241,232,0.46);
+  margin-bottom: 0.85rem;
+}
+
+#collection .selected-roles-grid .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.4s ease 0.18s, transform 0.4s ease 0.18s;
+}
+#collection .selected-roles-grid .glass-wrap:hover .chips {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#collection .selected-roles-grid .chip {
+  padding: 0.2rem 0.52rem;
+  background: rgba(139,0,0,0.28);
+  border: 0.5px solid rgba(201,169,97,0.22);
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #C9A961;
+  border-radius: 2px;
+}
+
+#collection .selected-roles-grid .card-cta {
+  flex-shrink: 0;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.32s ease 0.28s, transform 0.32s ease 0.28s;
+}
+#collection .selected-roles-grid .glass-wrap:hover .card-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#collection .selected-roles-grid .cta-location {
+  font-size: 0.48rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.3);
+}
+
+#collection .selected-roles-grid .cta-btn {
+  font-size: 0.46rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C9A961;
+  border: 0.5px solid rgba(201,169,97,0.38);
+  background: transparent;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  border-radius: 2px;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  white-space: nowrap;
+}
+#collection .selected-roles-grid .cta-btn:hover {
+  background: #C9A961;
+  color: #000;
+  border-color: #C9A961;
 }
 
 .role-logo {
@@ -1365,15 +1509,18 @@ footer .nav-cv .cv-link {
     <h2 class="sec-title reveal" data-en="Selected Roles" data-fa="سوابق منتخب">Selected Roles</h2>
     <div class="sec-rule reveal"></div>
 
-    <div class="cards-grid">
+    <div class="cards-grid selected-roles-grid">
 
       <div class="card reveal">
         <div class="glass-wrap">
           <div class="card-glass">
+            <div class="card-header">
         <img class="role-logo" src="Assest/AT&T_logo.png" alt="AT&T" onerror="this.style.display='none'">
         <span class="card-glyph">AT&T</span>
         <h3 class="card-name" data-en="Senior Quality Assurance Engineer (DIRECTV)" data-fa="مهندس ارشد تضمین کیفیت (DIRECTV)">Senior Quality Assurance Engineer (DIRECTV)</h3>
         <p class="card-origin" data-en="AT&T · Contract · Feb 2023 — Present" data-fa="AT&T · قراردادی · ۲۰۲۳ تا اکنون">AT&T · Contract · Feb 2023 — Present</p>
+            </div>
+            <div class="card-body">
         <p class="card-desc"
           data-en-preview="Built and maintained automation across UI and API layers (Playwright, Cypress, SpecFlow/BDD). Integrated suites into CI/CD (Jenkins) and supported SDLC testing from requirements through release."
           data-fa-preview="اتوماسیون تست در لایه‌های UI و API (Playwright، Cypress، SpecFlow/BDD). یکپارچه‌سازی در CI/CD (Jenkins) و پشتیبانی از SDLC از تحلیل نیازمندی تا انتشار."
@@ -1386,8 +1533,11 @@ footer .nav-cv .cv-link {
           <span class="chip">Cypress</span>
           <span class="chip">Jenkins</span>
         </div>
-        <p class="card-more" data-en="More details" data-fa="جزئیات بیشتر">More details</p>
-        <p class="card-price" data-en="Los Angeles · Hybrid" data-fa="لس‌آنجلس · هیبرید">Los Angeles · Hybrid</p>
+            </div>
+            <div class="card-cta">
+              <span class="cta-location" data-en="Los Angeles · Hybrid" data-fa="لس‌آنجلس · هیبرید">Los Angeles · Hybrid</span>
+              <button class="cta-btn" type="button" data-en="More details" data-fa="جزئیات بیشتر">More details</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1395,10 +1545,13 @@ footer .nav-cv .cv-link {
       <div class="card reveal">
         <div class="glass-wrap">
           <div class="card-glass">
+            <div class="card-header">
         <img class="role-logo" src="Assest/Universal_Bank.svg.png" alt="Universal Bank" onerror="this.style.display='none'">
         <span class="card-glyph">Universal Bank</span>
         <h3 class="card-name" data-en="Test Automation Engineer" data-fa="مهندس اتوماسیون تست">Test Automation Engineer</h3>
         <p class="card-origin" data-en="Universal Bank · Contract · Jan 2021 — Feb 2023" data-fa="Universal Bank · قراردادی · ۲۰۲۱ تا ۲۰۲۳">Universal Bank · Contract · Jan 2021 — Feb 2023</p>
+            </div>
+            <div class="card-body">
         <p class="card-desc"
           data-en-preview="Developed and maintained scalable automation frameworks using Java, C#, Selenium WebDriver, and JUnit to ensure reliable and efficient testing processes."
           data-fa-preview="توسعه و نگهداری فریم‌ورک‌های اتوماسیون مقیاس‌پذیر با Java، C#، Selenium WebDriver و JUnit برای تضمین فرایندهای تست قابل اعتماد و کارآمد."
@@ -1411,8 +1564,11 @@ footer .nav-cv .cv-link {
           <span class="chip">REST Assured</span>
           <span class="chip">Docker</span>
         </div>
-        <p class="card-more" data-en="More details" data-fa="جزئیات بیشتر">More details</p>
-        <p class="card-price" data-en="Los Angeles · Hybrid" data-fa="لس‌آنجلس · هیبرید">Los Angeles · Hybrid</p>
+            </div>
+            <div class="card-cta">
+              <span class="cta-location" data-en="Los Angeles · Hybrid" data-fa="لس‌آنجلس · هیبرید">Los Angeles · Hybrid</span>
+              <button class="cta-btn" type="button" data-en="More details" data-fa="جزئیات بیشتر">More details</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1420,10 +1576,13 @@ footer .nav-cv .cv-link {
       <div class="card reveal">
         <div class="glass-wrap">
           <div class="card-glass">
+            <div class="card-header">
         <img class="role-logo" src="Assest/Cigna.png" alt="Cigna" onerror="this.style.display='none'">
         <span class="card-glyph">Cigna Insurance</span>
         <h3 class="card-name" data-en="QA Automation Engineer" data-fa="مهندس اتوماسیون QA">QA Automation Engineer</h3>
         <p class="card-origin" data-en="Cigna Insurance Services · Contract · Mar 2018 — Dec 2020" data-fa="Cigna · قراردادی · ۲۰۱۸ تا ۲۰۲۰">Cigna Insurance Services · Contract · Mar 2018 — Dec 2020</p>
+            </div>
+            <div class="card-body">
         <p class="card-desc"
           data-en-preview="Created data access layer using Entity Framework DB first approach to handle all scripts execution results. Worked in a DevOps agile environment to achieve CI/CD."
           data-fa-preview="ایجاد لایه دسترسی به داده با رویکرد Entity Framework (DB First) برای مدیریت نتایج اجرای اسکریپت‌ها و کار در محیط DevOps/Agile برای دستیابی به CI/CD."
@@ -1436,8 +1595,11 @@ footer .nav-cv .cv-link {
           <span class="chip">Postman</span>
           <span class="chip">Azure DevOps</span>
         </div>
-        <p class="card-more" data-en="More details" data-fa="جزئیات بیشتر">More details</p>
-        <p class="card-price" data-en="Washington · Remote" data-fa="واشینگتن · ریموت">Washington · Remote</p>
+            </div>
+            <div class="card-cta">
+              <span class="cta-location" data-en="Washington · Remote" data-fa="واشینگتن · ریموت">Washington · Remote</span>
+              <button class="cta-btn" type="button" data-en="More details" data-fa="جزئیات بیشتر">More details</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1445,10 +1607,13 @@ footer .nav-cv .cv-link {
       <div class="card reveal">
         <div class="glass-wrap">
           <div class="card-glass">
+            <div class="card-header">
         <img class="role-logo" src="Assest/State Farm.png" alt="State Farm" onerror="this.style.display='none'">
         <span class="card-glyph">State Farm </span>
         <h3 class="card-name" data-en="QA Analyst (Manual Tester)" data-fa="تحلیل‌گر QA (تست دستی)">QA Analyst (Manual Tester)</h3>
         <p class="card-origin" data-en="State Farm · Contract · Jan 2016 — Feb 2018 · 2 yrs 2 mos" data-fa="State Farm · قراردادی · ۲۰۱۶ تا ۲۰۱۸ · ۲ سال و ۲ ماه">State Farm · Contract · Jan 2016 — Feb 2018 · 2 yrs 2 mos</p>
+            </div>
+            <div class="card-body">
         <p class="card-desc"
           data-en-preview="Creation of Test Requirements Specification documents, Test plans, and Test Result documentation. Writing SQL queries for data verification during backend testing against Oracle."
           data-fa-preview="تهیه مستندات نیازمندی‌های تست، برنامه‌های تست و نتایج تست. نوشتن کوئری‌های SQL برای بررسی داده‌ها در تست بک‌اند روی Oracle."
@@ -1461,8 +1626,11 @@ footer .nav-cv .cv-link {
           <span class="chip">SOAP UI</span>
           <span class="chip">Agile</span>
         </div>
-        <p class="card-more" data-en="More details" data-fa="جزئیات بیشتر">More details</p>
-        <p class="card-price" data-en="Chevy Chase, Maryland, United States · Remote" data-fa="مریلند، ایالات متحده · ریموت">Chevy Chase, Maryland, United States · Remote</p>
+            </div>
+            <div class="card-cta">
+              <span class="cta-location" data-en="Chevy Chase, Maryland, United States · Remote" data-fa="مریلند، ایالات متحده · ریموت">Chevy Chase, Maryland, United States · Remote</span>
+              <button class="cta-btn" type="button" data-en="More details" data-fa="جزئیات بیشتر">More details</button>
+            </div>
           </div>
         </div>
       </div>
