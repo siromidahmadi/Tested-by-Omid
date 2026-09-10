@@ -546,7 +546,36 @@ nav.scrolled {
 
 #collection .selected-roles-grid {
   grid-auto-rows: 1fr;
+  grid-template-columns: repeat(3, 1fr);
 }
+
+/* Bento spans: card 1 (BuildLACCD) wide, rest fill the remaining cells */
+#collection .selected-roles-grid .card:nth-child(1) { grid-column: span 2; }
+#collection .selected-roles-grid .card:nth-child(2) { grid-column: span 1; }
+#collection .selected-roles-grid .card:nth-child(3),
+#collection .selected-roles-grid .card:nth-child(4),
+#collection .selected-roles-grid .card:nth-child(5) { grid-column: span 1; }
+@media (max-width: 900px) {
+  #collection .selected-roles-grid { grid-template-columns: 1fr; }
+  #collection .selected-roles-grid .card { grid-column: span 1 !important; }
+}
+
+/* Spotlight cursor-follow glow */
+#collection .selected-roles-grid .glass-wrap {
+  --spot-x: 50%;
+  --spot-y: 50%;
+}
+#collection .selected-roles-grid .glass-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(360px circle at var(--spot-x) var(--spot-y), rgba(201,169,97,0.16), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+#collection .selected-roles-grid .glass-wrap:hover::before { opacity: 1; }
 
 #collection .selected-roles-grid .card {
   padding: 0;
@@ -1476,7 +1505,7 @@ footer .nav-cv .cv-link {
       <a href="#contact" class="ov-cta" data-en="Contact" data-fa="تماس">Contact</a>
       <div class="ov-cta-row">
         <a class="ov-cta small" href="Assest/Omid%20Ahmadi.pdf" download data-en="Download CV (PDF)" data-fa="دانلود رزومه (PDF)">Download CV (PDF)</a>
-        <a class="ov-cta small" href="Assest/Omid%20Ahmadi.docx" download data-en="Download CV (Word)" data-fa="دانلود رزومه (Word)">Download CV (Word)</a>
+        <a class="ov-cta small" href="Assest/Omid_Ahmadi_Final_Master_Resume.docx" download data-en="Download CV (Word)" data-fa="دانلود رزومه (Word)">Download CV (Word)</a>
       </div>
     </div>
 
@@ -1516,21 +1545,21 @@ footer .nav-cv .cv-link {
           <div class="card-glass">
             <div class="card-header">
         <span class="card-glyph">BuildLACCD</span>
-        <h3 class="card-name" data-en="Project Management / PMO" data-fa="مدیریت پروژه / PMO">Project Management / PMO</h3>
+        <h3 class="card-name" data-en="Software Engineer" data-fa="مهندس نرم‌افزار">Software Engineer</h3>
         <p class="card-origin" data-en="BuildLACCD · Los Angeles Community College District · May 2026 — Present" data-fa="BuildLACCD · منطقه کالج‌های جامعه لس‌آنجلس · ۲۰۲۶ تا اکنون">BuildLACCD · Los Angeles Community College District · May 2026 — Present</p>
             </div>
             <div class="card-body">
         <p class="card-desc"
-          data-en-preview="Coordinate monthly priority project lists across 9 LACCD campuses, supporting PMO governance, project controls, portfolio reporting, and districtwide project tracking."
-          data-fa-preview="هماهنگی فهرست‌های اولویت پروژه ماهانه در ۹ پردیس LACCD و پشتیبانی از حاکمیت PMO، کنترل پروژه و گزارش‌دهی سراسری."
-          data-en="Coordinate monthly MLA Priority Project Lists across 9 LACCD campuses, supporting PMO governance, project controls, portfolio reporting, documentation management, and districtwide project tracking.<br>Support facilities and infrastructure project activities throughout the project lifecycle, including project documentation, construction document review, deliverables, scheduling coordination, reporting, and stakeholder follow-up.<br>Collect, validate, organize, and maintain approved PDF priority lists and Excel working files from campus project teams, supporting document control, records management, data accuracy, and project reporting.<br>Maintain the Districtwide MLA Excel tracker as a centralized resource for portfolio tracking, status monitoring, project controls, and stakeholder visibility.<br>Track missing and delayed submissions, coordinate follow-ups, identify documentation gaps, and work with project controls personnel and stakeholders toward resolution.<br>Support Electric Vehicle Charging Station (EVCS), sustainability, green construction, and infrastructure project analysis through review of drawings, specifications, project documentation, and charging-stall counts.<br>Perform construction document review, drawing review, discrepancy analysis, data validation, quality control, and document verification.<br>Use Bluebeam and Microsoft Excel for construction document review, project tracking, data analysis, reporting, and project-control activities.<br>Collaborate with project managers, project engineers, project controls specialists, campus teams, consultants, and program stakeholders to maintain accurate project information."
-          data-fa="Coordinate monthly MLA Priority Project Lists across 9 LACCD campuses, supporting PMO governance, project controls, portfolio reporting, documentation management, and districtwide project tracking.">
-          Coordinate monthly priority project lists across 9 LACCD campuses, supporting PMO governance, project controls, portfolio reporting, and districtwide project tracking.
+          data-en-preview="Design and maintain a new internal application for tracking PMO Priority Projects at BuildLACCD, alongside data validation, structured documentation, and portfolio-reporting logic across 9 LACCD campuses."
+          data-fa-preview="طراحی و نگهداری یک اپلیکیشن داخلی جدید برای ردیابی پروژه‌های اولویت‌دار PMO در BuildLACCD، همراه با اعتبارسنجی داده و مستندسازی ساختاریافته در ۹ پردیس LACCD."
+          data-en="Design, build, and maintain a new internal web application for tracking PMO Priority Projects at BuildLACCD — covering requirements gathering, data-model and database design, feature development, bug fixes, and ongoing maintenance and user support.<br>Maintain and extend a districtwide data-tracking system across 9 LACCD campuses, applying data validation, structured documentation, and portfolio-reporting logic to support PMO governance, project controls, and documentation management.<br>Support facilities and infrastructure project activities throughout the project lifecycle, including technical documentation, construction document review, deliverables tracking, scheduling coordination, reporting, and stakeholder follow-up.<br>Collect, validate, organize, and maintain approved PDF priority lists and Excel-based data files from campus project teams, applying data integrity checks, version control, and structured record-keeping.<br>Build and maintain the Districtwide MLA Excel tracker as a centralized data system for portfolio tracking, status monitoring, project controls, and stakeholder visibility.<br>Identify data gaps and inconsistencies across submissions, debug and resolve tracking discrepancies, and coordinate with project controls personnel and stakeholders toward resolution.<br>Support Electric Vehicle Charging Station (EVCS), sustainability, green construction, and infrastructure project analysis through structured review of drawings, specifications, project documentation, and quantitative charging-stall counts.<br>Perform construction document review, drawing review, discrepancy analysis, data validation, quality control, and document verification — applying the same analytical rigor used in software QA.<br>Use Bluebeam and Microsoft Excel (formulas, structured data models, and automation-driven workflows) for construction document review, project tracking, data analysis, reporting, and project-control activities.<br>Collaborate with project managers, project engineers, project controls specialists, campus teams, consultants, and program stakeholders to gather requirements and maintain accurate, well-documented project information and systems."
+          data-fa="Design and maintain a new internal application for tracking PMO Priority Projects at BuildLACCD, alongside data validation, structured documentation, and portfolio-reporting logic across 9 LACCD campuses.">
+          Design and maintain a new internal application for tracking PMO Priority Projects at BuildLACCD, alongside data validation, structured documentation, and portfolio-reporting logic across 9 LACCD campuses.
         </p>
         <div class="chips">
-          <span class="chip">Project Controls</span>
-          <span class="chip">Bluebeam</span>
-          <span class="chip">PMO</span>
+          <span class="chip">Application Development</span>
+          <span class="chip">Database Design</span>
+          <span class="chip">Data Validation</span>
         </div>
             </div>
             <div class="card-cta">
@@ -2468,7 +2497,7 @@ footer .nav-cv .cv-link {
       </svg>
       Resume (PDF)
     </a>
-    <a class="cv-link" href="Assest/Omid%20Ahmadi.docx" download data-en="Resume (Word)" data-fa="رزومه (Word)">
+    <a class="cv-link" href="Assest/Omid_Ahmadi_Final_Master_Resume.docx" download data-en="Resume (Word)" data-fa="رزومه (Word)">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M12 3v10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
         <path d="M8.5 10.5 12 13.9l3.5-3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2514,6 +2543,17 @@ const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
+
+/* ── SELECTED ROLES: SPOTLIGHT BENTO GRID ── */
+document.querySelectorAll('#collection .selected-roles-grid .glass-wrap').forEach(wrap => {
+  wrap.addEventListener('mousemove', (e) => {
+    const rect = wrap.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    wrap.style.setProperty('--spot-x', x + '%');
+    wrap.style.setProperty('--spot-y', y + '%');
+  });
+});
 
 /* ── HERO OVERLAY SEQUENCE ──
    The hero is 500vh. As user scrolls
