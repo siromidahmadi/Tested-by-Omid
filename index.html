@@ -544,74 +544,6 @@ nav.scrolled {
 
 .card.is-expandable { cursor: pointer; }
 
-/* ─── SCROLL-SCALE HERO (BuildLACCD / LACCD) ─── */
-.scroll-scale-hero {
-  position: relative;
-  height: 200vh;
-  margin: 3rem 0 4rem;
-}
-.scroll-scale-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-.scroll-scale-frame {
-  position: relative;
-  width: 82vw;
-  max-width: 1100px;
-  height: 58vh;
-  border-radius: 26px;
-  overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.6);
-  transform-origin: center center;
-  will-change: transform;
-  transform: scale(0.25);
-}
-.scroll-scale-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.scroll-scale-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.72), rgba(0,0,0,0.1) 55%, rgba(0,0,0,0.25));
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: clamp(1.25rem, 3vw, 2.75rem);
-  color: #fff;
-}
-.scroll-scale-eyebrow {
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.6rem;
-}
-.scroll-scale-title {
-  font-size: clamp(1.2rem, 3vw, 2.2rem);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.5rem;
-}
-.scroll-scale-sub {
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.75);
-  max-width: 34rem;
-  line-height: 1.5;
-}
-@media (prefers-reduced-motion: reduce) {
-  .scroll-scale-frame { transform: scale(1) !important; }
-  .scroll-scale-hero { height: auto; }
-  .scroll-scale-sticky { position: relative; height: auto; padding: 2rem 0; }
-}
-
 #collection .selected-roles-grid {
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(3, 1fr);
@@ -1605,19 +1537,6 @@ footer .nav-cv .cv-link {
     <p class="sec-eyebrow reveal" data-en="Experience" data-fa="تجربه">Experience</p>
     <h2 class="sec-title reveal" data-en="Selected Roles" data-fa="سوابق منتخب">Selected Roles</h2>
     <div class="sec-rule reveal"></div>
-
-    <div class="scroll-scale-hero" id="scrollScaleHero">
-      <div class="scroll-scale-sticky">
-        <div class="scroll-scale-frame" id="scrollScaleFrame">
-          <img class="scroll-scale-img" src="Assest/laccd-campus.jpg" alt="BuildLACCD — Los Angeles Community College District" onerror="this.src='Assest/laccd-map.png'">
-          <div class="scroll-scale-overlay">
-            <p class="scroll-scale-eyebrow" data-en="BuildLACCD" data-fa="BuildLACCD">BuildLACCD</p>
-            <h3 class="scroll-scale-title" data-en="Los Angeles Community College District" data-fa="منطقه کالج‌های جامعه لس‌آنجلس">Los Angeles Community College District</h3>
-            <p class="scroll-scale-sub" data-en="The largest community college district in the United States and one of the largest in the world." data-fa="بزرگترین منطقه کالج جامعه در ایالات متحده و یکی از بزرگترین‌ها در جهان.">The largest community college district in the United States and one of the largest in the world.</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="cards-grid selected-roles-grid">
 
@@ -2635,39 +2554,6 @@ document.querySelectorAll('#collection .selected-roles-grid .glass-wrap').forEac
     wrap.style.setProperty('--spot-y', y + '%');
   });
 });
-
-/* ── SELECTED ROLES: SCROLL-SCALE HERO (BuildLACCD) ── */
-(function () {
-  const hero = document.getElementById('scrollScaleHero');
-  const frame = document.getElementById('scrollScaleFrame');
-  if (!hero || !frame) return;
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced) return;
-
-  const startScale = 0.25;
-  let ticking = false;
-
-  function update() {
-    const rect = hero.getBoundingClientRect();
-    const containerHeight = hero.offsetHeight;
-    const windowHeight = window.innerHeight;
-    const scrolled = Math.max(0, -rect.top);
-    const maxScroll = Math.max(containerHeight - windowHeight, 1);
-    const progress = Math.min(Math.max(scrolled / maxScroll, 0), 1);
-    const scale = startScale + progress * (1 - startScale);
-    frame.style.transform = `scale(${scale})`;
-    ticking = false;
-  }
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(update);
-      ticking = true;
-    }
-  }, { passive: true });
-
-  update();
-})();
 
 /* ── HERO OVERLAY SEQUENCE ──
    The hero is 500vh. As user scrolls
