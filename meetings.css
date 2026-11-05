@@ -1,0 +1,24 @@
+.meetings-section { background: #080808; border-top: 1px solid rgba(255,215,0,.18); padding: 5rem 0; }
+.meeting-intro, .calendar-tools p { max-width: 740px; color: var(--cream-dim); line-height: 1.8; }
+.meeting-form { margin: 2rem 0; max-width: 850px; }
+.meeting-form fieldset { border: 0; padding: 0; margin: 0 0 1.5rem; min-width: 0; }
+.meeting-form legend { margin-bottom: 1rem; color: var(--gold); }
+.meeting-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.25rem; }
+.meeting-fields label { display: grid; gap: .5rem; font-size: .85rem; color: var(--cream); }
+.meeting-fields input, .meeting-fields select, .meeting-fields textarea { box-sizing: border-box; width: 100%; min-width: 0; border: 1px solid #666; border-radius: 4px; padding: .8rem; background: #171717; color: #f5f1e8; font: inherit; color-scheme: dark; }
+.meeting-message { grid-column: 1 / -1; }
+.meeting-fields textarea { resize: vertical; }
+.meeting-button { display: inline-block; border: 1px solid var(--gold); padding: .85rem 1.1rem; background: var(--gold); color: #111; font: 500 .85rem 'Inter',sans-serif; border-radius: 4px; cursor: pointer; }
+.meeting-button.secondary { background: transparent; color: var(--gold); }
+.meeting-button:disabled { opacity: .45; cursor: not-allowed; }
+.meeting-button:hover:enabled { filter: brightness(1.15); }
+.meeting-form :is(input,select,textarea,button,summary,a):focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.meeting-note { font-size: .8rem; line-height: 1.8; color: var(--cream-dim); margin-top: .8rem; }
+.meetings-section a { color: var(--gold); text-underline-offset: 4px; }
+.calendar-tools { margin-top: 1.8rem; border-top: 1px solid #444; padding-top: 1.3rem; }
+.calendar-tools summary { cursor: pointer; color: var(--cream); padding: .4rem 0; }
+.calendar-tools p { font-size: .85rem; margin-top: .8rem; }
+.meeting-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }
+#googleStatus { color: var(--cream); margin-top: 1rem; font-size: .9rem; line-height: 1.7; }
+.meeting-result:not([hidden]) { display: inline-block; padding: .7rem 0; }
+@media (max-width: 600px) { .meeting-fields { grid-template-columns: 1fr; } .meeting-actions { flex-direction: column; } .meetings-section { padding: 3rem 0; } }
