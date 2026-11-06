@@ -1,0 +1,26 @@
+/* Readable typography scoped to Projects / Selected Work only. */
+#projects .sec-eyebrow { font-size:.875rem; color:#ffe066; letter-spacing:.12em; }
+#projects .proj-index { color:#e3c77a !important; font-size:clamp(3rem,5vw,4.5rem); font-weight:500; }
+#projects .proj-name { color:#fff; font-size:clamp(2rem,3vw,2.6rem); font-weight:600; letter-spacing:0; line-height:1.25; margin-bottom:1rem; overflow-wrap:anywhere; }
+#projects .proj-client { color:#e5e7eb; font-size:1rem; font-weight:400; letter-spacing:.02em; text-transform:none; line-height:1.65; }
+#projects .proj-category { color:#f3f4f6 !important; font-size:.875rem; font-weight:400; letter-spacing:.02em; text-transform:none; line-height:1.6; border-color:#727272 !important; padding:.5rem .75rem; }
+#projects .proj-role-label,#projects .proj-outcome-label { color:#ffe066 !important; font-size:.875rem; font-weight:600; letter-spacing:.07em; line-height:1.5; margin-bottom:.5rem; }
+#projects .proj-role-val { color:#fff !important; font-size:1.125rem; font-weight:600; letter-spacing:0; line-height:1.6; }
+#projects .proj-desc,#projects .proj-outcome-text { color:#e5e7eb; font-size:1.125rem; font-weight:400; line-height:1.8; letter-spacing:0; max-width:68ch; }
+#projects .proj-outcome { border-left:3px solid #ffe066; background:rgba(255,255,255,.045); padding:1.25rem 1.5rem; }
+#projects .proj-left { padding-right:2.5rem; min-width:0; }
+#projects .proj-right { padding-left:2.5rem; min-width:0; gap:1.75rem; }
+#projects .proj-chip,#projects .project-row:hover .proj-chip { color:#e5e7eb; font-size:.875rem; letter-spacing:.03em; line-height:1.5; border-color:#666; padding:.35rem .65rem; }
+#projects .proj-link { color:#ffe066; font-size:1rem; font-weight:600; letter-spacing:.06em; line-height:1.6; opacity:1; padding:.5rem 0; }
+#projects .proj-more-btn { color:#f3f4f6; font-size:1rem; letter-spacing:.06em; border-color:#888; line-height:1.5; }
+#projects :is(.proj-link,.proj-more-btn):focus-visible { outline:3px solid #ffe066; outline-offset:5px; }
+@media (max-width:900px) {
+  #projects .project-row { grid-template-columns:minmax(0,1fr); }
+  #projects .proj-left { padding-right:0; margin-bottom:2rem; gap:1rem; }
+  #projects .proj-right { padding-left:0; border-left:0; border-top:1px solid #555; padding-top:2rem; }
+}
+@media (max-width:600px) {
+  #projects .projects-wrap { padding-left:1.5rem; padding-right:1.5rem; }
+  #projects .proj-desc,#projects .proj-outcome-text,#projects .proj-role-val { font-size:1rem; }
+  #projects .proj-outcome { padding:1rem; }
+}
