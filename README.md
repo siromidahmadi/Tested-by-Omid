@@ -17,7 +17,7 @@ The portfolio highlights work across telecommunications, banking, healthcare, in
 - **Skills:** automation frameworks, programming languages, CI/CD and cloud tools, API and data testing, test management, and spatial/XR testing.
 - **Education and credentials:** degrees, training, and certificates, including **Workplace Success I: Creative Leadership** and **Facilities Management**, issued by West Los Angeles College in August 2026.
 - **Résumé downloads:** PDF and Word versions.
-- **Contact and meeting requests:** email, LinkedIn, and a form for proposing a 30-minute conversation.
+- **Contact and meeting requests:** email, LinkedIn, and automatic Google Calendar booking for a 30-minute conversation.
 
 ## Design and implementation
 
@@ -25,15 +25,19 @@ Built with **HTML, CSS, and vanilla JavaScript** and hosted on **GitHub Pages**.
 
 The site includes a dark visual theme with gold and crimson accents, a video hero, scroll-driven transitions, expandable role details, skills tabs, and English/Persian content switching. The meeting-request form uses a responsive layout and labelled inputs.
 
-## Calendar and Google Meet
+## Book a conversation
 
-Visitors can request a meeting without Google sign-in. The form opens a prefilled email draft; the visitor must send it, and I confirm availability by email.
+[Choose a time and book](https://calendar.app.google/BcvawZuXMM3T6q2G9)
 
-An optional Google Calendar integration can create a **proposed event in the authorizing user’s own calendar** and request a Google Meet link. It does not check my availability, send me an invitation, or confirm a booking.
+- Monday–Friday, 9 a.m.–6 p.m. Pacific.
+- 30-minute appointments with a 15-minute buffer between bookings.
+- Available times are displayed in each visitor's local time zone.
+- Google Calendar checks Omid's primary calendar for conflicts.
+- Bookings include a calendar confirmation and an automatically generated Google Meet link.
 
-Google Cloud configuration and live authorization testing are still required. Google Chat is not connected.
+The website links directly to the Google Calendar appointment page. Visitors do not need to authorize the portfolio to access their Calendar. Email and LinkedIn remain available for general inquiries.
 
-See [GOOGLE-SETUP.md](GOOGLE-SETUP.md) for configuration steps and integration limitations.
+The earlier optional OAuth-based personal-calendar prototype is no longer loaded by the public page. Google Chat is not connected.
 
 ## Repository structure
 
@@ -42,7 +46,7 @@ Tested-by-Omid/
 ├── index.html              # Portfolio content, inline styles, and interactions
 ├── style.css               # Additional stylesheet
 ├── meetings.css            # Meeting-request form styling
-├── google-integration.js   # Email request and optional Calendar/Meet flow
+├── google-integration.js   # Earlier personal-calendar prototype (not loaded)
 ├── GOOGLE-SETUP.md         # Google configuration and setup notes
 ├── Assest/                 # Photos, logos, videos, and résumé downloads
 └── README.md
