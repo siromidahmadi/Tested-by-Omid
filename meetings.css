@@ -22,3 +22,17 @@
 #googleStatus { color: var(--cream); margin-top: 1rem; font-size: .9rem; line-height: 1.7; }
 .meeting-result:not([hidden]) { display: inline-block; padding: .7rem 0; }
 @media (max-width: 600px) { .meeting-fields { grid-template-columns: 1fr; } .meeting-actions { flex-direction: column; } .meetings-section { padding: 3rem 0; } }
+
+/* Supplied Btn09 hover design, scoped to the public booking link. */
+.meetings-section a.booking-hover { position:relative; isolation:isolate; display:inline-flex; align-items:center; justify-content:center; overflow:hidden; border:0; border-radius:.375rem; background:#1f2937; padding:.8rem 2rem; min-height:44px; max-width:100%; box-sizing:border-box; letter-spacing:-.025em; color:#fff; text-decoration:none; cursor:pointer; }
+.booking-hover > span:not(.booking-hover-label) { position:absolute; pointer-events:none; }
+.booking-hover-fill { left:50%; top:50%; width:0; aspect-ratio:1; border-radius:50%; background:#ea580c; transform:translate(-50%,-50%); transition:width .5s ease-out; }
+.booking-hover:is(:hover,:focus-visible) .booking-hover-fill { width:150%; }
+.booking-hover-left { left:-.5rem; bottom:0; height:100%; }
+.booking-hover-left svg { display:block; height:100%; width:auto; }
+.booking-hover-right { top:0; right:-.75rem; height:100%; width:3rem; }
+.booking-hover-right svg { display:block; height:100%; width:100%; object-fit:cover; }
+.booking-hover-shine { inset:0; margin-top:-.25rem; border-radius:.5rem; background:linear-gradient(to bottom,transparent,transparent,#e5e7eb); opacity:.3; }
+.booking-hover-label { position:relative; font:600 1rem/1.5 'Inter',sans-serif; text-align:center; overflow-wrap:anywhere; }
+.booking-hover:focus-visible { outline:3px solid var(--gold); outline-offset:5px; }
+@media (prefers-reduced-motion: reduce) { .booking-hover-fill { transition:none; } }
