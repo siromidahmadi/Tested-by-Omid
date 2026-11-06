@@ -1405,6 +1405,7 @@ footer .nav-cv .cv-link {
       <li><a href="#skills" data-en="Skills" data-fa="مهارت‌ها">Skills</a></li>
       <li><a href="#certifications" data-en="Certifications" data-fa="گواهینامه‌ها">Certifications</a></li>
       <li><a href="#contact" data-en="Contact" data-fa="تماس">Contact</a></li>
+    <li><a href="#meetings" data-en="Book a call" data-fa="رزرو گفتگو">Book a call</a></li>
     </ul>
     <div class="lang-toggle">
       <button id="btn-en" class="lang-btn active"  onclick="setLang('en')">EN</button>
@@ -2492,38 +2493,16 @@ footer .nav-cv .cv-link {
 <section id="meetings" class="meetings-section">
   <div class="projects-wrap">
     <p class="sec-eyebrow" data-en="Let's connect" data-fa="در ارتباط باشیم">Let's connect</p>
-    <h2 class="sec-title" data-en="Start a conversation" data-fa="شروع گفتگو">Start a conversation</h2>
-    <p class="meeting-intro">Have a QA project, job opportunity, or collaboration in mind? Propose a time for a 30-minute conversation. Omid will confirm availability by email.</p>
-    <form id="meetingRequest" class="meeting-form">
-      <fieldset id="meetingFields">
-        <legend>Meeting request</legend>
-        <div class="meeting-fields">
-          <label>Your name<input name="visitorName" autocomplete="name" required maxlength="100"></label>
-          <label>Your email<input name="visitorEmail" type="email" autocomplete="email" required maxlength="254"></label>
-          <label>Conversation topic<select name="meetingTopic"><option>Interview</option><option>Consultation</option><option>Collaboration</option></select></label>
-          <label>Proposed time (your local time)<input name="meetingTime" type="datetime-local" required></label>
-          <label class="meeting-message">What would you like to discuss?<textarea name="meetingMessage" rows="3" maxlength="1500"></textarea></label>
-        </div>
-      </fieldset>
-      <button class="meeting-button" type="submit">Request by email →</button>
-      <p class="meeting-note">No Google sign-in needed. Opens a draft in your email app; send it to submit your request.</p>
-      <details class="calendar-tools">
-        <summary>Optional: add a proposed event to your Google Calendar</summary>
-        <p>Connect your own Google account to save the proposed time and request a Google Meet link. This creates an event only in your calendar. It does not check Omid's availability or send an invitation. Request confirmation by email.</p>
-        <div class="meeting-actions">
-          <button class="meeting-button secondary" type="button" id="connectGoogle">Connect Google Calendar</button>
-          <button class="meeting-button secondary" type="button" id="scheduleMeeting" disabled>Create proposed event &amp; Meet</button>
-        </div>
-        <p class="meeting-note">Google will ask for Calendar event access. The connection lasts for this page session.</p>
-      </details>
-      <p id="googleStatus" role="status" aria-live="polite"></p>
-      <a id="calendarResult" class="meeting-result" target="_blank" rel="noopener noreferrer" hidden>Open your calendar event →</a>
-    </form>
+    <h2 class="sec-title" data-en="Book a conversation" data-fa="رزرو زمان گفتگو">Book a conversation</h2>
+    <p class="meeting-intro" data-en="Choose an available time for a conversation about QA automation, interviews, or collaboration. Your booking is confirmed through Google Calendar, with a Google Meet link." data-fa="برای گفتگو درباره اتوماسیون تست، مصاحبه یا همکاری، یک زمان آزاد انتخاب کنید. رزرو شما از طریق تقویم گوگل تأیید می‌شود و لینک گوگل میت دریافت می‌کنید.">Choose an available time for a conversation about QA automation, interviews, or collaboration. Your booking is confirmed through Google Calendar, with a Google Meet link.</p>
+    <div class="meeting-actions" style="margin:1.5rem 0;">
+      <a class="meeting-button" style="color:#111;text-decoration:none;" href="https://calendar.app.google/BcvawZuXMM3T6q2G9" target="_blank" rel="noopener noreferrer" data-en="Choose a time &amp; book →" data-fa="انتخاب زمان و رزرو ←">Choose a time &amp; book →</a>
+    </div>
+    <p class="meeting-note" data-en="Monday–Friday · 9 a.m.–6 p.m. Pacific · 30-minute appointments · 15-minute buffer between bookings." data-fa="دوشنبه تا جمعه · ۹ صبح تا ۶ عصر به وقت اقیانوس آرام · جلسات ۳۰ دقیقه‌ای · ۱۵ دقیقه فاصله بین رزروها.">Monday–Friday · 9 a.m.–6 p.m. Pacific · 30-minute appointments · 15-minute buffer between bookings.</p>
+    <p class="meeting-note" data-en="The booking page shows times in your local time zone and excludes busy times on Omid's primary calendar. Google Meet details are included after booking." data-fa="صفحه رزرو زمان‌ها را به وقت محلی شما نشان می‌دهد و زمان‌های مشغول تقویم اصلی امید را حذف می‌کند. اطلاعات گوگل میت پس از رزرو ارسال می‌شود.">The booking page shows times in your local time zone and excludes busy times on Omid's primary calendar. Google Meet details are included after booking.</p>
     <p class="meeting-note">Prefer a message? <a href="mailto:aomid6362@gmail.com">Email Omid</a> or <a href="https://www.linkedin.com/in/ahmadiomid92" target="_blank" rel="noopener noreferrer">connect on LinkedIn</a>.</p>
   </div>
 </section>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script src="google-integration.js" defer></script>
 
 <footer class="reveal">
   <div class="footer-logo" data-en="OMID AHMADI" data-fa="امید احمدی">OMID AHMADI</div>
@@ -2535,6 +2514,7 @@ footer .nav-cv .cv-link {
     <li><a href="#skills" data-en="Skills" data-fa="مهارت‌ها">Skills</a></li>
     <li><a href="#certifications" data-en="Certifications" data-fa="گواهینامه‌ها">Certifications</a></li>
     <li><a href="#contact"    data-en="Contact"    data-fa="تماس">Contact</a></li>
+    <li><a href="#meetings" data-en="Book a call" data-fa="رزرو گفتگو">Book a call</a></li>
   </ul>
   <div class="nav-cv" style="margin-left:0;">
     <a class="cv-link" href="Assest/Omid%20Ahmadi.pdf" download data-en="Resume (PDF)" data-fa="رزومه (PDF)">
