@@ -121,3 +121,10 @@ body.modal-open { overflow:hidden; }
  *,*::before,*::after { animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; }
  .reveal { opacity:1; transform:none; }
 }
+
+html[dir="rtl"] .lang-widget-track { right:auto; left:0; flex-direction:row; }
+html[dir="rtl"] .lang-widget-options { margin-right:0; margin-left:0; }
+html[dir="rtl"] .lang-widget[data-expanded="true"] .lang-widget-options { margin-right:0; margin-left:7px; }
+@media(max-width:1200px) {
+ html[dir="rtl"] #navbar .lang-widget-options { right:auto; left:0; margin:0; }
+}
