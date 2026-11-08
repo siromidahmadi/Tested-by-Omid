@@ -2539,11 +2539,8 @@ footer .nav-cv .cv-link {
       </div>
     </details>
   </div>
-  <div class="footer-social">
-    <a class="soc" href="https://www.linkedin.com/in/ahmadiomid92" target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a>
-    <a class="soc" href="https://github.com/siromidahmadi" target="_blank" rel="noreferrer" aria-label="GitHub">gh</a>
-  </div>
-  <button class="tiny-btn" id="verifyInfoBtn" type="button">Info</button>
+  
+  
   <p class="footer-copy">© 2026 Omid Ahmadi — Los Angeles, California</p>
 </footer>
 
@@ -2788,39 +2785,6 @@ function closeCardModal() {
   cardModal.classList.remove('open');
   cardModal.setAttribute('aria-hidden', 'true');
   cardModalBody.innerHTML = '';
-}
-
-const verifyInfoBtn = document.getElementById('verifyInfoBtn');
-if (verifyInfoBtn) {
-  verifyInfoBtn.addEventListener('click', () => {
-    const a = 2 + Math.floor(Math.random() * 8);
-    const b = 2 + Math.floor(Math.random() * 8);
-    const ans = window.prompt(`What is ${a} × ${b}?`);
-    if (ans === null) return;
-    const n = Number(String(ans).trim());
-    if (!Number.isFinite(n) || n !== a * b) {
-      window.alert('Incorrect answer.');
-      return;
-    }
-    cardModalBody.innerHTML = `
-      <div class="card">
-        <span class="card-glyph">ID</span>
-        <h3 class="card-name">OMID AHMADI</h3>
-        <p class="card-origin">Quick Details</p>
-        <p class="card-desc">
-          Full Name: OMID AHMADI<br>
-          PHONE # +1 818 984 6362<br>
-          EMAIL: Aomid6362@gmail.com<br>
-          ZIP CODE: 90001<br>
-          ADDRESS: LOS ANGELES, CA<br>
-          NO SPONSERSHIP NEEDS<br>
-          US CITIZEN
-        </p>
-      </div>
-    `;
-    cardModal.classList.add('open');
-    cardModal.setAttribute('aria-hidden', 'false');
-  });
 }
 
 document.querySelectorAll('#collection .cards-grid .card').forEach(card => {
