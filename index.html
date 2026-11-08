@@ -1391,6 +1391,7 @@ footer .nav-cv .cv-link {
 }
 </style>
 <link rel="stylesheet" href="language-widget.css?v=2">
+<link rel="stylesheet" href="responsive.css?v=1">
 </head>
 <body>
 
@@ -1399,11 +1400,11 @@ footer .nav-cv .cv-link {
 <!-- ═══ NAVBAR ═══ -->
 <nav id="navbar">
   <div class="nav-logo">
-    <img src="Assest/logo.png" alt="Logo" onerror="this.style.display='none'">
-    <span data-en="Omid Ahmadi" data-es="Omid Ahmadi" data-fa="امید احمدی">Omid Ahmadi</span>
+<span data-en="Omid Ahmadi" data-es="Omid Ahmadi" data-fa="امید احمدی">Omid Ahmadi</span>
   </div>
   <div class="nav-right">
-    <ul class="nav-links">
+    <button class="nav-menu-toggle" id="navMenuToggle" type="button" aria-expanded="false" aria-controls="primaryLinks"><span data-en="Menu" data-es="Menú" data-fa="فهرست">Menu</span><span aria-hidden="true">☰</span></button>
+    <ul class="nav-links" id="primaryLinks">
       <li><a href="#collection" data-en="Experience" data-es="Experiencia" data-fa="تجربه">Experience</a></li>
       <li><a href="#story" data-en="About" data-es="Sobre mí" data-fa="درباره">About</a></li>
       <li><a href="#projects" data-en="Projects" data-es="Proyectos" data-fa="پروژه‌ها">Projects</a></li>
@@ -2540,7 +2541,7 @@ footer .nav-cv .cv-link {
 </footer>
 
 <div class="modal" id="cardModal" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-label="Experience details">
     <button class="modal-close" id="cardModalClose" type="button" aria-label="Close">×</button>
     <div id="cardModalBody"></div>
   </div>
@@ -2765,7 +2766,9 @@ const cardModal = document.getElementById('cardModal');
 const cardModalBody = document.getElementById('cardModalBody');
 const cardModalClose = document.getElementById('cardModalClose');
 
+let modalReturnFocus;
 function openCardModal(card) {
+  modalReturnFocus = document.activeElement;
   cardModalBody.innerHTML = '';
   const clone = card.cloneNode(true);
   clone.classList.remove('reveal', 'revealed');
@@ -2773,12 +2776,16 @@ function openCardModal(card) {
   cardModalBody.appendChild(clone);
   cardModal.classList.add('open');
   cardModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  cardModalClose.focus();
 }
 
 function closeCardModal() {
   cardModal.classList.remove('open');
   cardModal.setAttribute('aria-hidden', 'true');
   cardModalBody.innerHTML = '';
+  document.body.classList.remove('modal-open');
+  if (modalReturnFocus?.isConnected) modalReturnFocus.focus();
 }
 
 document.querySelectorAll('#collection .cards-grid .card').forEach(card => {
@@ -2823,6 +2830,8 @@ if (projBtn && projHidden) {
   projBtn.addEventListener('click', () => {
     const currentMaxHeight = projHidden.style.maxHeight;
     const isOpen = Boolean(currentMaxHeight) && currentMaxHeight !== '0px' && currentMaxHeight !== '0';
+    projBtn.setAttribute('aria-expanded', String(!isOpen));
+    projHidden.inert = isOpen;
     if (isOpen) {
       projHidden.style.maxHeight = '0';
       if (projIcon) projIcon.style.transform = 'rotate(0deg)';
@@ -2852,5 +2861,6 @@ if (projBtn && projHidden) {
 <script src="contact-actions.js" defer></script>
 <script src="resume-download.js" defer></script>
 <script src="language-widget.js?v=2"></script>
+<script src="responsive.js?v=1"></script>
 </body>
 </html>
