@@ -1,0 +1,14 @@
+/* Raised square language controls adapted from the supplied Framer demo. */
+.lang-widget.lang-toggle { position:relative; display:block; flex-shrink:0; direction:ltr; }
+.lang-widget-trigger { position:relative; display:flex; align-items:center; justify-content:center; width:46px; height:46px; list-style:none; border:1px solid #eee; border-radius:15px; background:#e0e0e0; color:#171717; box-shadow:4px 4px 9px #0007,-2px -2px 7px #ffffff38; cursor:pointer; transition:box-shadow .2s,transform .2s; }
+.lang-widget-trigger::-webkit-details-marker { display:none; }
+.lang-widget-trigger svg { width:23px; height:23px; }
+.lang-current { position:absolute; bottom:3px; right:4px; font:700 9px/1 'Inter',sans-serif; }
+.lang-widget[open] .lang-widget-trigger { box-shadow:inset 3px 3px 6px #bebebe,inset -3px -3px 6px #fff; }
+.lang-widget-options { position:absolute; top:calc(100% + 14px); right:0; display:flex; gap:10px; padding:12px; border-radius:22px; background:#e0e0e0; box-shadow:5px 5px 14px #0008,-2px -2px 8px #ffffff26; z-index:100; animation:language-reveal .22s ease-out; }
+.lang-widget .lang-btn { display:flex; align-items:center; justify-content:center; width:46px; height:46px; padding:0; border:0; border-radius:15px; background:#e0e0e0; color:#333; font:700 13px/1 'Inter',sans-serif; letter-spacing:.04em; cursor:pointer; box-shadow:5px 5px 10px #bfbfbf,-5px -5px 10px #fff; transition:transform .2s,box-shadow .2s,color .2s; }
+.lang-widget .lang-btn.active { color:#171717; box-shadow:inset 3px 3px 6px #bfbfbf,inset -3px -3px 6px #fff; }
+.lang-widget .lang-btn:hover { transform:translateY(-2px); color:#000; }
+.lang-widget :is(summary,button):focus-visible { outline:3px solid #d6ae4b; outline-offset:4px; }
+@keyframes language-reveal { from { opacity:0; transform:translateY(-7px) scale(.94); } to { opacity:1; transform:none; } }
+@media(prefers-reduced-motion:reduce) { .lang-widget-options { animation:none; } .lang-widget :is(summary,button) { transition:none; } }

@@ -1390,6 +1390,7 @@ footer .nav-cv .cv-link {
   transform: none;
 }
 </style>
+<link rel="stylesheet" href="language-widget.css">
 </head>
 <body>
 
@@ -1411,13 +1412,15 @@ footer .nav-cv .cv-link {
       <li><a href="#contact" data-en="Contact" data-es="Contacto" data-fa="تماس">Contact</a></li>
     <li><a href="#meetings" data-en="Book a call" data-es="Reservar una llamada" data-fa="رزرو گفتگو">Book a call</a></li>
     </ul>
-    <div class="lang-toggle">
-      <button id="btn-en" aria-label="English" title="English" class="lang-btn active"  onclick="setLang('en')">EN</button>
-      <span class="lang-sep">·</span>
-      <button id="btn-es" class="lang-btn inactive" onclick="setLang('es')" aria-label="Español" title="Español">ES</button>
-      <span class="lang-sep">·</span>
-      <button id="btn-fa" aria-label="فارسی" title="فارسی" class="lang-btn inactive" onclick="setLang('fa')">FA</button>
-    </div>
+    <details class="lang-toggle lang-widget" id="languageWidget">
+<summary class="lang-widget-trigger" aria-label="Choose language" title="Choose language">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c5 5 5 13 0 18-5-5-5-13 0-18Z"/></svg>
+<span class="lang-current" aria-hidden="true">EN</span>
+</summary>
+<div class="lang-widget-options" role="group" aria-label="Languages"><button id="btn-en" aria-label="English" title="English" class="lang-btn active"  onclick="setLang('en')">EN</button>
+<button id="btn-es" class="lang-btn inactive" onclick="setLang('es')" aria-label="Español" title="Español">ES</button>
+<button id="btn-fa" aria-label="فارسی" title="فارسی" class="lang-btn inactive" onclick="setLang('fa')">FA</button></div>
+</details>
   </div>
 </nav>
 
@@ -2850,5 +2853,6 @@ if (projBtn && projHidden) {
 </script>
 <script src="contact-actions.js" defer></script>
 <script src="resume-download.js" defer></script>
+<script src="language-widget.js"></script>
 </body>
 </html>
