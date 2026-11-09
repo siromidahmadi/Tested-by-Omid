@@ -15,3 +15,6 @@
 #contact .contact-action:focus-visible { outline:3px solid #ffe066; outline-offset:3px; }
 html[lang="fa"] #contact .contact-action-label { font-family:'Vazirmatn',sans-serif; }
 @media (prefers-reduced-motion:reduce) { #contact :is(.contact-action,.contact-action-label) { transition:none; } }
+
+/* Fixed brand fills preserve icon colors during hover and language changes. */
+#contact .contact-action .contact-brand-icon { width:24px; height:24px; }
