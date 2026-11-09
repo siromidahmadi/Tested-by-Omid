@@ -129,3 +129,25 @@ html[dir="rtl"] .lang-widget[data-expanded="true"] .lang-widget-options { margin
 @media(max-width:1200px) {
  html[dir="rtl"] #navbar .lang-widget-options { right:auto; left:0; margin:0; }
 }
+
+/* Language choices open vertically below the current abbreviation. */
+#navbar .lang-widget .lang-widget-track { flex-direction:column; }
+#navbar .lang-widget .lang-widget-track::after { content:""; position:absolute; top:100%; left:0; width:100%; height:8px; }
+#navbar .lang-widget .lang-widget-options {
+ position:absolute; top:100%; right:0; left:auto; flex-direction:column;
+ width:44px; max-width:none; max-height:0; gap:5px; margin:7px 0 0; padding:0;
+ border-radius:12px; background:#e0e0e0; box-shadow:3px 5px 10px #0006;
+ transform:translateY(-4px); transition:max-height .38s cubic-bezier(.2,.8,.2,1),padding .38s,opacity .25s,transform .38s,filter .25s,visibility .38s;
+}
+#navbar .lang-widget[data-expanded="true"] .lang-widget-options {
+ max-width:none; max-height:100px; padding:4px; margin:7px 0 0;
+ transform:none; opacity:1; filter:none; visibility:visible;
+}
+#navbar .lang-widget .lang-widget-options .lang-btn { width:36px; height:36px; }
+html[dir="rtl"] #navbar .lang-widget .lang-widget-options { right:auto; left:0; margin:7px 0 0; }
+@media(max-width:1200px) {
+ #navbar .lang-widget .lang-widget-options { width:52px; }
+ #navbar .lang-widget .lang-widget-options .lang-btn { width:44px; height:44px; }
+ #navbar .lang-widget[data-expanded="true"] .lang-widget-options { max-height:120px; }
+}
+@media(prefers-reduced-motion:reduce) { #navbar .lang-widget .lang-widget-options { transition:none; } }
