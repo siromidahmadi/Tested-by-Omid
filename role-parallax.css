@@ -1,0 +1,22 @@
+/* Supplied ParallaxTiltCard effect adapted for the static Selected Roles cards. */
+#collection .selected-roles-grid .card { perspective:1100px; overflow:visible; }
+#collection .selected-roles-grid .glass-wrap {
+ --tilt-x:0deg; --tilt-y:0deg; --logo-y:0px; --copy-y:0px;
+ transform:rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+ transform-style:preserve-3d; overflow:visible; border-radius:18px;
+}
+#collection .selected-roles-grid .card-glass { overflow:visible; transform-style:preserve-3d; border-radius:18px; background:linear-gradient(135deg,#241c18,#100f12); }
+#collection .selected-roles-grid .card-header { transform-style:preserve-3d; }
+#collection .selected-roles-grid .role-logo-stage { display:flex; align-items:center; justify-content:flex-start; min-height:100px; margin-bottom:1.5rem; transform:translateZ(50px) translateY(var(--logo-y)); transform-style:preserve-3d; pointer-events:none; }
+#collection .selected-roles-grid .role-logo { display:block; width:180px; max-width:100%; height:76px; object-fit:contain; margin:0; padding:12px 16px; border-radius:12px; background:#f7f5ef; filter:none; opacity:1; box-shadow:0 10px 25px #0005; }
+#collection .selected-roles-grid .role-company-name { font:500 1.7rem/1.3 'Inter',sans-serif; color:#f5f1e8; overflow-wrap:anywhere; }
+#collection .selected-roles-grid :is(.card-body,.chips,.card-cta) { transform:translateZ(25px) translateY(var(--copy-y)); }
+#collection .selected-roles-grid .card-name { font-size:1.5rem; }
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+ #collection .selected-roles-grid .glass-wrap[data-tilting="true"] { will-change:transform; }
+}
+@media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce) {
+ #collection .selected-roles-grid .glass-wrap,
+ #collection .selected-roles-grid :is(.role-logo-stage,.card-body,.chips,.card-cta) { transform:none!important; }
+ #collection .selected-roles-grid .role-logo-stage { min-height:84px; margin-bottom:1rem; }
+}
