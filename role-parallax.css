@@ -2,7 +2,7 @@
 #collection .selected-roles-grid .card { perspective:1100px; overflow:visible; }
 #collection .selected-roles-grid .glass-wrap {
  --tilt-x:0deg; --tilt-y:0deg; --logo-y:0px; --copy-y:0px;
- transform:rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+ transform:rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(var(--tilt-scale,1));
  transform-style:preserve-3d; overflow:visible; border-radius:18px;
 }
 #collection .selected-roles-grid .card-glass { overflow:visible; transform-style:preserve-3d; border-radius:18px; background:linear-gradient(135deg,#241c18,#100f12); }
@@ -19,4 +19,34 @@
  #collection .selected-roles-grid .glass-wrap,
  #collection .selected-roles-grid :is(.role-logo-stage,.card-body,.chips,.card-cta) { transform:none!important; }
  #collection .selected-roles-grid .role-logo-stage { min-height:84px; margin-bottom:1rem; }
+}
+
+/* Modern Tilt Card reference: rotating gold/lime edge, spotlight and lift. */
+@property --role-edge-angle { syntax:"<angle>"; initial-value:0deg; inherits:false; }
+#collection .selected-roles-grid .card { perspective:900px; }
+#collection .selected-roles-grid .glass-wrap { transition:box-shadow .3s ease; }
+#collection .selected-roles-grid .glass-wrap::after {
+ content:""; position:absolute; inset:-3px; border-radius:21px; padding:3px;
+ background:conic-gradient(from var(--role-edge-angle),transparent 0%,#fccd4c 6%,#84ff00 14%,transparent 26%,transparent 100%);
+ -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+ -webkit-mask-composite:xor;
+ mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+ mask-composite:exclude;
+ pointer-events:none; opacity:.65; transform:translateZ(1px);
+}
+#collection .selected-roles-grid .glass-wrap::before {
+ border-radius:18px;
+ background:radial-gradient(circle at var(--spot-x,50%) var(--spot-y,50%),#ffffff24,transparent 60%);
+ z-index:1; opacity:0; pointer-events:none; transform:translateZ(1px);
+}
+#collection .selected-roles-grid .card-glass { box-shadow:0 24px 34px #0005; }
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+ #collection .selected-roles-grid .glass-wrap:is(:hover,:focus-within) { --tilt-scale:1.015; box-shadow:0 24px 34px #0007; }
+ #collection .selected-roles-grid .glass-wrap:is(:hover,:focus-within)::after { opacity:1; animation:role-edge-spin 6s linear infinite; }
+ #collection .selected-roles-grid .glass-wrap:is(:hover,:focus-within)::before { opacity:1; }
+}
+@keyframes role-edge-spin { to { --role-edge-angle:360deg; } }
+@media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce) {
+ #collection .selected-roles-grid .glass-wrap::after { animation:none; opacity:.5; }
+ #collection .selected-roles-grid .glass-wrap::before { display:none; }
 }
