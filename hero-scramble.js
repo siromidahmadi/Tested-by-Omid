@@ -10,7 +10,7 @@
   clearInterval(timer); timer=0; queue=[];
   words.forEach(word=>{word.root.removeAttribute('data-scrambling');word.visual.textContent='';});
  };
- const reset=()=>{stop();nextWord=0;entryGesture=false;clearTimeout(scrollTimer);};
+ const reset=()=>{stop();nextWord=0;entryGesture=false;clearTimeout(scrollTimer);words.forEach(word=>{word.root.style.visibility=reduced.matches?'visible':'hidden';});};
  const prepare=()=>{
   reset();
   const lang=document.documentElement.lang||'en';
@@ -18,7 +18,7 @@
   headline.replaceChildren();
   words=lines.map((text,index)=>{
    if(index) headline.append(document.createElement('br'));
-   const root=document.createElement('span');root.className='scramble-word';
+   const root=document.createElement('span');root.className='scramble-word';root.style.visibility=reduced.matches?'visible':'hidden';
    const original=document.createElement('span');original.className='scramble-original';original.textContent=text;
    const visual=document.createElement('span');visual.className='scramble-visual';visual.setAttribute('aria-hidden','true');
    root.append(original,visual);headline.append(root);return {root,visual,text};
@@ -27,6 +27,7 @@
  const play=index=>{
   if(reduced.matches||!visible()||document.hidden)return;
   const word=words[index];if(!word)return;
+  word.root.style.visibility='visible';
   const start=performance.now();word.root.dataset.scrambling='true';
   const tick=()=>{
    const progress=Math.min(1,(performance.now()-start)/800);
