@@ -1,0 +1,5 @@
+# Hero text scramble
+
+The live static site adapts the supplied Sora text scramble for Test., Automate., Ship. in #ov2 only. Each line scrambles independently with an 800ms reveal and 40ms updates. It runs when the slide becomes visible and after subsequent scroll gestures settle while that slide is active, including return visits. Existing typography, colors, spacing and line breaks remain unchanged. A stable original text layer reserves each word’s width and remains accessible; the animated layer is aria-hidden. Animation is cancelled when hidden and disabled for prefers-reduced-motion. Spanish translations follow the same behavior.
+
+The supplied React component is preserved in components/ui/text-scramble.tsx. It imports motion/react (npm package motion) and is optional for a React/TypeScript/Tailwind build; the current website remains buildless. See BUTTON-INTEGRATION.md for existing setup instructions. Live style files live at the repository root, while reusable React sources live in components/ui to match @/components/ui imports.
