@@ -37,7 +37,7 @@ img,video { max-width:100%; }
 #navbar .nav-links a { display:inline-flex; align-items:center; min-height:44px; letter-spacing:.12em; font-size:.75rem; }
 #navbar .nav-right,#navbar .nav-links { gap:1.5rem; }
 #navbar { background:transparent; }
-#navbar:not(.scrolled) { backdrop-filter:none; -webkit-backdrop-filter:none; }
+#navbar, #navbar.scrolled { background:transparent; backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:none; border:0; }
 body.modal-open { overflow:hidden; }
 .modal-dialog { overscroll-behavior:contain; }
 .modal-close { position:sticky; top:0; margin-inline-start:auto; display:block; width:44px; height:44px; background:#171717; z-index:5; cursor:pointer; }
