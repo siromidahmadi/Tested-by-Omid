@@ -30,7 +30,7 @@
   word.root.style.visibility='visible';
   const start=performance.now();word.root.dataset.scrambling='true';
   const tick=()=>{
-   const progress=Math.min(1,(performance.now()-start)/800);
+   const progress=Math.min(1,(performance.now()-start)/1600);
    const revealed=Math.floor(progress*word.text.length);
    word.visual.textContent=Array.from(word.text).map((char,i)=>i<revealed||/[\s.]/.test(char)?char:chars[Math.floor(Math.random()*chars.length)]).join('');
    if(progress===1){
@@ -59,7 +59,7 @@
    if(!visible())return;
    if(entryGesture){entryGesture=false;return;}
    advance();
-  },160);
+  },300);
  },{passive:true});
  reduced.addEventListener('change',reset);
  document.addEventListener('visibilitychange',()=>{if(document.hidden)reset();});

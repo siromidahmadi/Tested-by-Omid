@@ -2,3 +2,7 @@
 #ov2 .scramble-word { display:inline-block; position:relative; white-space:nowrap; }
 #ov2 .scramble-word[data-scrambling="true"] .scramble-original { opacity:0; }
 #ov2 .scramble-visual { position:absolute; inset:0; white-space:nowrap; pointer-events:none; }
+
+/* Longer headline scroll window on desktop, tablet and phone. */
+#hero { height:650vh; }
+@supports(height:100svh) { #hero { height:650svh; } }

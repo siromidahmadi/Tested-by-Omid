@@ -1,5 +1,5 @@
-# Ordered hero text scramble
+# Progressive headline reveal
 
-On scrolling into the Test./Automate./Ship. headline, only Test. scrambles. The next distinct scroll gesture animates Automate.; the third animates Ship. Each gesture is separated by 160ms of scroll inactivity. Entry and its settling events count as one gesture. A later gesture received during animation queues its word, so no two words scramble together. After Ship., the headline remains still until the visitor leaves and re-enters this slide. Original typography and reserved word widths are unchanged. Reduced motion disables scrambling. Language changes retain translations and reset the sequence for the next scroll.
+First scroll into the headline reveals Test.; the next gesture reveals Automate.; the third reveals Ship. Previously revealed words remain visible. Each word resolves over 1.6 seconds. Scroll gestures settle after 300ms, grouping wheel bursts and native touch inertia. Fast input queues the next word without overlapping animations.
 
-The live site is static HTML/CSS/JavaScript. The supplied optional React source is components/ui/text-scramble.tsx (motion/react dependency); see BUTTON-INTEGRATION.md for setup guidance.
+The hero has 650 viewport heights of scroll space, with the headline active from 30% to 80% progress. This preserves approximately the previous entrance timing while giving the three-word sequence more room on phones/tablets. Stable viewport units avoid browser toolbar height jumps where supported. Typography is unchanged. Leaving the slide resets the sequence; reduced motion renders the full static headline.
