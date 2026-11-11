@@ -6,3 +6,36 @@
 /* Longer headline scroll window on desktop, tablet and phone. */
 #hero { height:650vh; }
 @supports(height:100svh) { #hero { height:650svh; } }
+
+/* Kokonut Glitch Text movement, scoped to the completed three-word headline.
+   Source: @dorianbaffier / kokonutui.com, MIT. Existing typography is inherited. */
+#ov2 .glitch-ghost { display:none; position:absolute; inset:0; pointer-events:none; white-space:nowrap; }
+#ov2 [data-glitch="active"] .scramble-word { animation:hero-glitch-main 1s cubic-bezier(.25,.46,.45,.94) both; }
+#ov2 [data-glitch="active"] .glitch-ghost { display:block; }
+#ov2 [data-glitch="active"] .glitch-ghost-a { color:#7ee8ed; animation:hero-glitch-before 1s cubic-bezier(.25,.46,.45,.94) both; }
+#ov2 [data-glitch="active"] .glitch-ghost-b { color:#f6a4bb; animation:hero-glitch-after 1s cubic-bezier(.25,.46,.45,.94) both; }
+@keyframes hero-glitch-main {
+ 0%,100% { transform:translate(0); }
+ 20% { transform:translate(3px,-3px) skew(1deg); }
+ 40% { transform:translate(-3px,3px) skew(-1deg); }
+ 60% { transform:translate(-3px,-3px) skew(1deg); }
+ 80% { transform:translate(3px,3px) skew(-1deg); }
+}
+@keyframes hero-glitch-before {
+ 0%,100% { transform:translate(0); opacity:0; }
+ 20% { transform:translate(-3px,3px) skew(-1deg); opacity:.7; }
+ 40% { transform:translate(3px,-3px) skew(1deg); opacity:.85; }
+ 60% { transform:translate(3px,3px) skew(-1deg); opacity:.7; }
+ 80% { transform:translate(-3px,-3px) skew(1deg); opacity:.85; }
+}
+@keyframes hero-glitch-after {
+ 0%,100% { transform:translate(0); opacity:0; }
+ 20% { transform:translate(3px,-3px) skew(1deg); opacity:.85; }
+ 40% { transform:translate(-3px,3px) skew(-1deg); opacity:.7; }
+ 60% { transform:translate(-3px,3px) skew(1deg); opacity:.85; }
+ 80% { transform:translate(3px,-3px) skew(-1deg); opacity:.7; }
+}
+@media(prefers-reduced-motion:reduce) {
+ #ov2 [data-glitch="active"] .scramble-word { animation:none; }
+ #ov2 [data-glitch="active"] .glitch-ghost { display:none; }
+}

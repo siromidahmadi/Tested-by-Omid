@@ -1,5 +1,5 @@
-# Progressive headline reveal
+# Progressive headline and final glitch
 
-First scroll into the headline reveals Test.; the next gesture reveals Automate.; the third reveals Ship. Previously revealed words remain visible. Each word resolves over 1.6 seconds. Scroll gestures settle after 300ms, grouping wheel bursts and native touch inertia. Fast input queues the next word without overlapping animations.
+Test., Automate., and Ship. are revealed on three separate scroll gestures, resolving over 1.6 seconds each. Later words stay hidden until their turn. After Ship. finishes, the three words receive one 1-second Kokonut-style glitch (opposing duplicate layers, 3px displacement, 1-degree skew), then return to normal. No font family, font size, font weight, line spacing, letter spacing, or headline layout is changed. The one-shot state resets when leaving the slide; nothing glitches before the final word completes. Reduced motion disables both effects. The duplicate visual layers are aria-hidden.
 
-The hero has 650 viewport heights of scroll space, with the headline active from 30% to 80% progress. This preserves approximately the previous entrance timing while giving the three-word sequence more room on phones/tablets. Stable viewport units avoid browser toolbar height jumps where supported. Typography is unchanged. Leaving the slide resets the sequence; reduced motion renders the full static headline.
+The supplied MIT React component is preserved at components/ui/glitch-text.tsx. It depends on motion/react and @/lib/utils, and is optional for React/TypeScript/Tailwind projects. See BUTTON-INTEGRATION.md for setup guidance. The static live adaptation uses hero-scramble.js and hero-scramble.css.

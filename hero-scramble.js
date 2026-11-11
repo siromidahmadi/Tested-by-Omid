@@ -4,13 +4,14 @@
  if(!headline) return;
  const reduced=matchMedia('(prefers-reduced-motion:reduce)');
  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
- let words=[],timer=0,scrollTimer=0,wasVisible=false,nextWord=0,entryGesture=false,queue=[],gesturePending=false;
+ let words=[],timer=0,scrollTimer=0,wasVisible=false,nextWord=0,entryGesture=false,queue=[],gesturePending=false,glitchTimer=0,glitchDone=false;
  const visible=()=>overlay.classList.contains('visible') && document.getElementById('hero').getBoundingClientRect().bottom>innerHeight;
  const stop=()=>{
   clearInterval(timer); timer=0; queue=[];
+  clearTimeout(glitchTimer);glitchTimer=0;delete headline.dataset.glitch;
   words.forEach(word=>{word.root.removeAttribute('data-scrambling');word.visual.textContent='';});
  };
- const reset=()=>{stop();nextWord=0;entryGesture=false;gesturePending=false;clearTimeout(scrollTimer);words.forEach(word=>{word.root.style.visibility=reduced.matches?'visible':'hidden';});};
+ const reset=()=>{stop();glitchDone=false;nextWord=0;entryGesture=false;gesturePending=false;clearTimeout(scrollTimer);words.forEach(word=>{word.root.style.visibility=reduced.matches?'visible':'hidden';});};
  const prepare=()=>{
   reset();
   const lang=document.documentElement.lang||'en';
@@ -21,8 +22,15 @@
    const root=document.createElement('span');root.className='scramble-word';root.style.visibility=reduced.matches?'visible':'hidden';
    const original=document.createElement('span');original.className='scramble-original';original.textContent=text;
    const visual=document.createElement('span');visual.className='scramble-visual';visual.setAttribute('aria-hidden','true');
-   root.append(original,visual);headline.append(root);return {root,visual,text};
+   const ghostA=document.createElement('span');ghostA.className='glitch-ghost glitch-ghost-a';ghostA.textContent=text;ghostA.setAttribute('aria-hidden','true');
+   const ghostB=document.createElement('span');ghostB.className='glitch-ghost glitch-ghost-b';ghostB.textContent=text;ghostB.setAttribute('aria-hidden','true');
+   root.append(original,visual,ghostA,ghostB);headline.append(root);return {root,visual,text};
   });
+ };
+ const finishGlitch=()=>{
+  if(glitchDone||reduced.matches||!visible()||document.hidden)return;
+  glitchDone=true;headline.dataset.glitch='active';
+  glitchTimer=setTimeout(()=>{delete headline.dataset.glitch;glitchTimer=0;},1100);
  };
  const play=index=>{
   if(reduced.matches||!visible()||document.hidden)return;
@@ -35,6 +43,7 @@
    word.visual.textContent=Array.from(word.text).map((char,i)=>i<revealed||/[\s.]/.test(char)?char:chars[Math.floor(Math.random()*chars.length)]).join('');
    if(progress===1){
     clearInterval(timer);timer=0;word.root.removeAttribute('data-scrambling');word.visual.textContent='';
+    if(index===words.length-1)finishGlitch();
     if(queue.length)play(queue.shift());
    }
   };
