@@ -4,13 +4,13 @@
  if(!headline) return;
  const reduced=matchMedia('(prefers-reduced-motion:reduce)');
  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
- let words=[],timer=0,scrollTimer=0,wasVisible=false,nextWord=0,entryGesture=false,queue=[];
+ let words=[],timer=0,scrollTimer=0,wasVisible=false,nextWord=0,entryGesture=false,queue=[],gesturePending=false;
  const visible=()=>overlay.classList.contains('visible') && document.getElementById('hero').getBoundingClientRect().bottom>innerHeight;
  const stop=()=>{
   clearInterval(timer); timer=0; queue=[];
   words.forEach(word=>{word.root.removeAttribute('data-scrambling');word.visual.textContent='';});
  };
- const reset=()=>{stop();nextWord=0;entryGesture=false;clearTimeout(scrollTimer);words.forEach(word=>{word.root.style.visibility=reduced.matches?'visible':'hidden';});};
+ const reset=()=>{stop();nextWord=0;entryGesture=false;gesturePending=false;clearTimeout(scrollTimer);words.forEach(word=>{word.root.style.visibility=reduced.matches?'visible':'hidden';});};
  const prepare=()=>{
   reset();
   const lang=document.documentElement.lang||'en';
@@ -53,11 +53,19 @@
  };
  new MutationObserver(update).observe(overlay,{attributes:true,attributeFilter:['class']});
  new MutationObserver(()=>{prepare();wasVisible=visible();}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+ window.addEventListener('wheel',()=>{gesturePending=true;},{passive:true});
+ window.addEventListener('touchstart',()=>{gesturePending=true;},{passive:true});
+ window.addEventListener('keydown',event=>{
+  if(event.target.closest?.('input,textarea,select,[contenteditable="true"]'))return;
+  if(['PageDown','PageUp','ArrowDown','ArrowUp','Home','End',' '].includes(event.key))gesturePending=true;
+ });
  window.addEventListener('scroll',()=>{
   clearTimeout(scrollTimer);
   scrollTimer=setTimeout(()=>{
    if(!visible())return;
-   if(entryGesture){entryGesture=false;return;}
+   if(entryGesture){entryGesture=false;gesturePending=false;return;}
+   if(!gesturePending)return;
+   gesturePending=false;
    advance();
   },300);
  },{passive:true});
